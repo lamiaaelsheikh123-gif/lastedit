@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Phoenix · Create Account</title>
+  <!-- Font Awesome 6 (لأيقونة المود فقط) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --bg: #f9fafc;
+      --surface: #ffffff;
+      --text-primary: #1e1e2f;
+      --text-secondary: #4a4a5e;
+      --accent-1: #ff8a4c;
+      --accent-2: #ff6b2b;
+      --gradient: linear-gradient(135deg, #ff8a4c, #ff4d4d);
+      --border: #e0e4e8;
+      --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05);
+      --glow: rgba(255, 110, 64, 0.4);
+      --input-bg: #ffffff;
+      --card-bg: #ffffff;
+      --navbar-bg: rgba(255, 255, 255, 0.8);
+      --error-color: #e53e3e;
+      --success-color: #38a169;
+      --weak-color: #e53e3e;
+      --medium-color: #fbbf24;
+      --strong-color: #38a169;
+      --requirement-met: #38a169;
+      --requirement-unmet: #a0aec0;
+    }
+
+    body.dark {
+      --bg: #12121a;
+      --surface: #1e1e2a;
+      --text-primary: #f0f0fa;
+      --text-secondary: #b0b0c0;
+      --accent-1: #ff9f6e;
+      --accent-2: #ff7b3f;
+      --gradient: linear-gradient(135deg, #ff9f6e, #ff5e5e);
+      --border: #333344;
+      --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.7);
+      --glow: rgba(255, 140, 80, 0.6);
+      --input-bg: #252533;
+      --card-bg: #1e1e2a;
+      --navbar-bg: rgba(30, 30, 42, 0.9);
+      --error-color: #fc8181;
+      --success-color: #68d391;
+      --weak-color: #fc8181;
+      --medium-color: #fbbf24;
+      --strong-color: #68d391;
+      --requirement-met: #68d391;
+      --requirement-unmet: #718096;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      transition: background-color 0.3s, color 0.2s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle at 10% 30%, rgba(255, 140, 64, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 90% 70%, rgba(255, 100, 100, 0.03) 0%, transparent 30%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ===== شريط التنقل البسيط ===== */
+    .nav-mini {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--navbar-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-mini .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-mini .logo-area img {
+      height: 52px;
+      width: auto;
+      border-radius: 12px;
+    }
+
+    .nav-mini .logo-text h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-mini .logo-text span {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-mini .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+
+    /* ===== الحاوية الرئيسية ===== */
+    .signin-container {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .signin-card {
+      max-width: 600px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 48px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .form-side {
+      width: 100%;
+    }
+
+    .form-side h3 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-side .subhead {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    /* ===== تنسيق الحقول ===== */
+    .input-field {
+      margin-bottom: 1.5rem;
+    }
+
+    .input-field label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* الحاوية التي تضم input (لجميع الحقول) */
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper input,
+    .input-wrapper select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      font-size: 1rem;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      height: 52px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .input-wrapper input:hover,
+    .input-wrapper select:hover {
+      border-color: var(--accent-1);
+    }
+
+    .input-wrapper input:focus,
+    .input-wrapper select:focus {
+      outline: none;
+      border-color: var(--accent-1);
+      box-shadow: 0 0 0 4px var(--glow);
+    }
+
+    /* حقل مع أيقونة (مثل الباسورد) */
+    .input-wrapper.password-wrapper {
+      padding-right: 3rem;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: color 0.2s;
+    }
+
+    .password-toggle:hover {
+      color: var(--accent-1);
+    }
+
+    /* ===== رسائل الخطأ ===== */
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      margin-left: 0.5rem;
+      min-height: 1.2rem;
+    }
+
+    /* ===== مؤشر قوة كلمة المرور ===== */
+    .strength-meter {
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .strength-bar {
+      height: 6px;
+      width: 80px;
+      background-color: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s, background-color 0.3s;
+      border-radius: 10px;
+    }
+
+    .strength-text {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    /* ===== قائمة متطلبات كلمة المرور ===== */
+    .password-requirements {
+      margin-top: 0.75rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .requirement {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--requirement-unmet);
+      transition: color 0.2s;
+    }
+
+    .requirement i {
+      font-size: 0.7rem;
+      width: 1rem;
+    }
+
+    .requirement.met {
+      color: var(--requirement-met);
+    }
+
+    /* ===== صف الاسم (First & Last) ===== */
+    .name-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .name-row .input-field {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    /* ===== العمر والجنس ===== */
+    .age-gender-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+
+    .age-field {
+      flex: 1;
+    }
+
+    .gender-field {
+      flex: 2;
+    }
+
+    .gender-options {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      margin-top: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .gender-option {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .gender-option input[type="radio"] {
+      accent-color: var(--accent-1);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ===== Terms Checkbox محسّن ===== */
+    .terms-checkbox {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    .terms-checkbox input[type="checkbox"] {
+      width: auto;
+      margin-right: 0.5rem;
+      accent-color: var(--accent-1);
+      transform: scale(1.1);
+    }
+
+    .terms-checkbox label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .terms-checkbox a {
+      color: var(--accent-1);
+      text-decoration: none;
+    }
+
+    /* ===== زر التسجيل ===== */
+    .btn-signin {
+      width: 100%;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 4px 14px var(--glow);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-signin:hover:not(:disabled) {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px var(--glow);
+    }
+
+    .btn-signin:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .spinner {
+      width: 1.2rem;
+      height: 1.2rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .or-divider {
+      text-align: center;
+      position: relative;
+      margin: 1.5rem 0;
+    }
+
+    .or-divider span {
+      background: var(--card-bg);
+      padding: 0 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .or-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--border);
+      z-index: 1;
+    }
+
+    /* ===== زر Google المحسّن ===== */
+    .google-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.9rem;
+      border-radius: 60px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-bottom: 2rem;
+    }
+
+    .google-btn:hover {
+      background: var(--surface);
+      border-color: var(--accent-1);
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .login-link {
+      text-align: center;
+      color: var(--text-secondary);
+    }
+
+    .login-link a {
+      color: var(--accent-1);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 600px) {
+      .signin-container {
+        padding: 1rem;
+      }
+
+      .signin-card {
+        padding: 1.5rem;
+        border-radius: 32px;
+      }
+
+      .form-side h3 {
+        font-size: 1.75rem;
+      }
+
+      .name-row {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .age-gender-row {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .gender-options {
+        justify-content: flex-start;
+        gap: 1rem;
+      }
+
+      .password-requirements {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-mini {
+        padding: 0.8rem 1rem;
+      }
+
+      .nav-mini .logo-area img {
+        height: 44px;
+      }
+
+      .nav-mini .logo-text h2 {
+        font-size: 1.3rem;
+      }
+
+      .nav-mini .logo-text span {
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .signin-card {
+        padding: 1rem;
+      }
+
+      .gender-options {
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-mini">
+    <div class="logo-area">
+      <img src="photo_2026-02-17_19-01-20.jpg" alt="Phoenix">
+      <div class="logo-text">
+        <h2>Phoenix</h2>
+        <span>donate & trade</span>
+      </div>
+    </div>
+    <div>
+      <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+    </div>
+  </div>
+
+  <div class="signin-container">
+    <div class="signin-card">
+      <div class="form-side">
+        <h3>Create Account</h3>
+        <div class="subhead">Fill in your details to get started.</div>
+
+        <form id="signupForm" novalidate>
+          <div id="generalError" class="error-message" style="display: none;"></div>
+
+          <!-- First & Last Name -->
+          <div class="name-row">
+            <div class="input-field">
+              <label for="firstName">First Name *</label>
+              <div class="input-wrapper">
+                <input type="text" id="firstName" placeholder="John" required>
+              </div>
+              <div class="error-message" id="firstNameError"></div>
+            </div>
+            <div class="input-field">
+              <label for="lastName">Last Name *</label>
+              <div class="input-wrapper">
+                <input type="text" id="lastName" placeholder="Doe" required>
+              </div>
+              <div class="error-message" id="lastNameError"></div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="input-field">
+            <label for="email">Email *</label>
+            <div class="input-wrapper">
+              <input type="email" id="email" placeholder="hello@phoenix.exchange" required autocomplete="email">
+            </div>
+            <div class="error-message" id="emailError"></div>
+          </div>
+
+          <!-- Phone Number (جديد) -->
+          <div class="input-field">
+            <label for="phone">Phone Number *</label>
+            <div class="input-wrapper">
+              <input type="tel" id="phone" placeholder="01001234567" required autocomplete="tel" inputmode="numeric"
+                pattern="\d*">
+            </div>
+            <div class="error-message" id="phoneError"></div>
+          </div>
+
+          <!-- Password -->
+          <div class="input-field">
+            <label for="password">Password *</label>
+            <div class="input-wrapper password-wrapper">
+              <input type="password" id="password" placeholder="Create a strong password" required minlength="8"
+                autocomplete="new-password">
+              <button type="button" class="password-toggle" id="togglePassword" aria-label="Show/hide password">
+                <i class="far fa-eye-slash"></i>
+              </button>
+            </div>
+            <div class="strength-meter" id="strengthMeter">
+              <div class="strength-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+              </div>
+              <span class="strength-text" id="strengthText">Enter password</span>
+            </div>
+            <!-- قائمة متطلبات كلمة المرور -->
+            <div class="password-requirements" id="passwordRequirements">
+              <div class="requirement" data-requirement="length"><i class="far fa-circle"></i> At least 8 characters
+              </div>
+              <div class="requirement" data-requirement="uppercase"><i class="far fa-circle"></i> One uppercase letter
+              </div>
+              <div class="requirement" data-requirement="lowercase"><i class="far fa-circle"></i> One lowercase letter
+              </div>
+              <div class="requirement" data-requirement="number"><i class="far fa-circle"></i> One number</div>
+              <div class="requirement" data-requirement="special"><i class="far fa-circle"></i> One special character
+                (!@#$%^&*)</div>
+            </div>
+            <div class="error-message" id="passwordError"></div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="input-field">
+            <label for="confirmPassword">Confirm Password *</label>
+            <div class="input-wrapper password-wrapper">
+              <input type="password" id="confirmPassword" placeholder="Re-enter password" required minlength="8"
+                autocomplete="new-password">
+              <button type="button" class="password-toggle" id="toggleConfirmPassword" aria-label="Show/hide password">
+                <i class="far fa-eye-slash"></i>
+              </button>
+            </div>
+            <div class="error-message" id="confirmPasswordError"></div>
+          </div>
+
+          <!-- Age & Gender -->
+          <div class="age-gender-row">
+            <div class="input-field age-field">
+              <label for="age">Age *</label>
+              <div class="input-wrapper">
+                <input type="number" id="age" placeholder="25" min="13" max="120" required>
+              </div>
+              <div class="error-message" id="ageError"></div>
+            </div>
+            <div class="input-field gender-field">
+              <label>Gender *</label>
+              <div class="gender-options">
+                <label class="gender-option"><input type="radio" name="gender" value="male" required> Male</label>
+                <label class="gender-option"><input type="radio" name="gender" value="female"> Female</label>
+              </div>
+              <div class="error-message" id="genderError"></div>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div class="terms-checkbox">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></label>
+          </div>
+          <div class="error-message" id="termsError"></div>
+
+          <button type="submit" class="btn-signin" id="submitBtn">
+            <span id="submitText">Create Account</span>
+            <span id="submitSpinner" class="spinner" style="display: none;"></span>
+          </button>
+        </form>
+
+        <div class="or-divider"><span>OR</span></div>
+        <button class="google-btn" id="googleBtn">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+          Continue with Google
+        </button>
+        <div class="login-link">Already have an account? <a href="sign.html">Sign In</a></div>
+        <div class="footer-note">Phoenix Exchange System © 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // === Dark Mode Toggle ===
+      const toggle = document.getElementById('themeToggle');
+      const icon = toggle.querySelector('i');
+      toggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        if (document.body.classList.contains('dark')) {
+          icon.classList.remove('fa-moon'); icon.classList.add('fa-sun');
+        } else {
+          icon.classList.remove('fa-sun'); icon.classList.add('fa-moon');
+        }
+      });
+
+      // === الحصول على العناصر ===
+      const form = document.getElementById('signupForm');
+      const firstName = document.getElementById('firstName');
+      const lastName = document.getElementById('lastName');
+      const email = document.getElementById('email');
+      const phone = document.getElementById('phone');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const age = document.getElementById('age');
+      const genderRadios = document.querySelectorAll('input[name="gender"]');
+      const terms = document.getElementById('terms');
+
+      // عناصر الأخطاء
+      const firstNameError = document.getElementById('firstNameError');
+      const lastNameError = document.getElementById('lastNameError');
+      const emailError = document.getElementById('emailError');
+      const phoneError = document.getElementById('phoneError');
+      const passwordError = document.getElementById('passwordError');
+      const confirmPasswordError = document.getElementById('confirmPasswordError');
+      const ageError = document.getElementById('ageError');
+      const genderError = document.getElementById('genderError');
+      const termsError = document.getElementById('termsError');
+      const generalError = document.getElementById('generalError');
+
+      // عناصر قوة كلمة المرور
+      const strengthFill = document.getElementById('strengthFill');
+      const strengthText = document.getElementById('strengthText');
+
+      // عناصر متطلبات كلمة المرور
+      const requirementLength = document.querySelector('[data-requirement="length"]');
+      const requirementUppercase = document.querySelector('[data-requirement="uppercase"]');
+      const requirementLowercase = document.querySelector('[data-requirement="lowercase"]');
+      const requirementNumber = document.querySelector('[data-requirement="number"]');
+      const requirementSpecial = document.querySelector('[data-requirement="special"]');
+
+      // أزرار إظهار/إخفاء
+      const togglePassword = document.getElementById('togglePassword');
+      const toggleConfirm = document.getElementById('toggleConfirmPassword');
+
+      // زر الإرسال
+      const submitBtn = document.getElementById('submitBtn');
+      const submitText = document.getElementById('submitText');
+      const submitSpinner = document.getElementById('submitSpinner');
+
+      // === دوال التحقق ===
+      function validateFirstName() {
+        const value = firstName.value.trim();
+        if (!value) {
+          firstNameError.textContent = 'First name is required.';
+          return false;
+        }
+        firstNameError.textContent = '';
+        return true;
+      }
+
+      function validateLastName() {
+        const value = lastName.value.trim();
+        if (!value) {
+          lastNameError.textContent = 'Last name is required.';
+          return false;
+        }
+        lastNameError.textContent = '';
+        return true;
+      }
+
+      function validateEmail() {
+        const value = email.value.trim();
+        if (!value) {
+          emailError.textContent = 'Email is required.';
+          return false;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          emailError.textContent = 'Invalid email format.';
+          return false;
+        }
+        emailError.textContent = '';
+        return true;
+      }
+
+      // دالة التحقق من رقم الهاتف
+      function validatePhone() {
+        const value = phone.value.trim();
+        if (!value) {
+          phoneError.textContent = 'Phone number is required.';
+          return false;
+        }
+        // التحقق من أن الإدخال يحتوي على أرقام فقط
+        if (!/^\d+$/.test(value)) {
+          phoneError.textContent = 'Only numbers are allowed.';
+          return false;
+        }
+        // التحقق من الطول
+        if (value.length !== 11) {
+          phoneError.textContent = 'Phone number must be 11 digits.';
+          return false;
+        }
+        phoneError.textContent = '';
+        return true;
+      }
+
+      // تحديث قوة كلمة المرور والمتطلبات
+      function updatePasswordStrengthAndRequirements() {
+        const value = password.value;
+        let strength = 0;
+
+        const hasLength = value.length >= 8;
+        const hasUppercase = /[A-Z]/.test(value);
+        const hasLowercase = /[a-z]/.test(value);
+        const hasNumber = /\d/.test(value);
+        const hasSpecial = /[!@#$%^&*]/.test(value);
+
+        // تحديث المتطلبات
+        updateRequirement(requirementLength, hasLength);
+        updateRequirement(requirementUppercase, hasUppercase);
+        updateRequirement(requirementLowercase, hasLowercase);
+        updateRequirement(requirementNumber, hasNumber);
+        updateRequirement(requirementSpecial, hasSpecial);
+
+        if (value.length === 0) {
+          strengthFill.style.width = '0%';
+          strengthText.textContent = 'Enter password';
+          strengthFill.style.backgroundColor = 'transparent';
+          return;
+        }
+
+        // حساب القوة للشريط (نستخدم length, uppercase, number للتوافق مع السابق)
+        let barStrength = 0;
+        if (hasLength) barStrength++;
+        if (hasUppercase) barStrength++;
+        if (hasNumber) barStrength++;
+
+        if (barStrength === 0 || barStrength === 1) {
+          strengthFill.style.width = '33%';
+          strengthFill.style.backgroundColor = 'var(--weak-color)';
+          strengthText.textContent = 'Weak';
+        } else if (barStrength === 2) {
+          strengthFill.style.width = '66%';
+          strengthFill.style.backgroundColor = 'var(--medium-color)';
+          strengthText.textContent = 'Medium';
+        } else {
+          strengthFill.style.width = '100%';
+          strengthFill.style.backgroundColor = 'var(--strong-color)';
+          strengthText.textContent = 'Strong';
+        }
+      }
+
+      function updateRequirement(element, isMet) {
+        if (isMet) {
+          element.classList.add('met');
+          element.querySelector('i').classList.remove('fa-circle', 'far');
+          element.querySelector('i').classList.add('fa-check-circle', 'fas');
+        } else {
+          element.classList.remove('met');
+          element.querySelector('i').classList.remove('fa-check-circle', 'fas');
+          element.querySelector('i').classList.add('fa-circle', 'far');
+        }
+      }
+
+      function validatePassword() {
+        const value = password.value;
+        if (!value) {
+          passwordError.textContent = 'Password is required.';
+          return false;
+        }
+        if (value.length < 8) {
+          passwordError.textContent = 'Must be at least 8 characters.';
+          return false;
+        }
+        passwordError.textContent = '';
+        return true;
+      }
+
+      function validateConfirmPassword() {
+        const pass = password.value;
+        const confirm = confirmPassword.value;
+        if (!confirm) {
+          confirmPasswordError.textContent = 'Please confirm your password.';
+          return false;
+        }
+        if (pass !== confirm) {
+          confirmPasswordError.textContent = 'Passwords do not match.';
+          return false;
+        }
+        confirmPasswordError.textContent = '';
+        return true;
+      }
+
+      function validateAge() {
+        const value = age.value.trim();
+        if (!value) {
+          ageError.textContent = 'Age is required.';
+          return false;
+        }
+        const num = Number(value);
+        if (isNaN(num) || num < 13 || num > 120) {
+          ageError.textContent = 'Age must be between 13 and 120.';
+          return false;
+        }
+        ageError.textContent = '';
+        return true;
+      }
+
+      function validateGender() {
+        const checked = Array.from(genderRadios).some(r => r.checked);
+        if (!checked) {
+          genderError.textContent = 'Please select your gender.';
+          return false;
+        }
+        genderError.textContent = '';
+        return true;
+      }
+
+      function validateTerms() {
+        if (!terms.checked) {
+          termsError.textContent = 'You must agree to the Terms & Privacy Policy.';
+          return false;
+        }
+        termsError.textContent = '';
+        return true;
+      }
+
+      // === ربط الأحداث للتحقق الفوري ===
+      firstName.addEventListener('input', validateFirstName);
+      lastName.addEventListener('input', validateLastName);
+      email.addEventListener('input', validateEmail);
+      phone.addEventListener('input', validatePhone);
+      password.addEventListener('input', () => {
+        validatePassword();
+        updatePasswordStrengthAndRequirements();
+        if (confirmPassword.value) validateConfirmPassword();
+      });
+      confirmPassword.addEventListener('input', validateConfirmPassword);
+      age.addEventListener('input', validateAge);
+      genderRadios.forEach(radio => radio.addEventListener('change', validateGender));
+      terms.addEventListener('change', validateTerms);
+
+      // === إظهار/إخفاء كلمة المرور ===
+      function setupPasswordToggle(toggleBtn, inputField) {
+        toggleBtn.addEventListener('click', () => {
+          const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
+          inputField.setAttribute('type', type);
+          const icon = toggleBtn.querySelector('i');
+          if (type === 'password') {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          } else {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          }
+        });
+      }
+
+      setupPasswordToggle(togglePassword, password);
+      setupPasswordToggle(toggleConfirm, confirmPassword);
+
+      // === التحقق العام قبل الإرسال ===
+      function validateForm() {
+        const isFirstNameValid = validateFirstName();
+        const isLastNameValid = validateLastName();
+        const isEmailValid = validateEmail();
+        const isPhoneValid = validatePhone();
+        const isPasswordValid = validatePassword();
+        const isConfirmValid = validateConfirmPassword();
+        const isAgeValid = validateAge();
+        const isGenderValid = validateGender();
+        const isTermsValid = validateTerms();
+
+        return isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid &&
+          isPasswordValid && isConfirmValid && isAgeValid && isGenderValid && isTermsValid;
+      }
+
+      // === معالجة تقديم النموذج ===
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        generalError.style.display = 'none';
+
+        if (!validateForm()) {
+          const firstError = document.querySelector('.error-message:not(:empty)');
+          if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // تفعيل حالة التحميل
+        submitBtn.disabled = true;
+        submitText.textContent = 'Creating account...';
+        submitSpinner.style.display = 'inline-block';
+
+        // محاكاة التسجيل في localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        const emailValue = email.value.trim();
+        const existingUser = users.find(user => user.email === emailValue);
+        if (existingUser) {
+          generalError.textContent = 'This email is already registered.';
+          generalError.style.display = 'block';
+          submitBtn.disabled = false;
+          submitText.textContent = 'Create Account';
+          submitSpinner.style.display = 'none';
+          return;
+        }
+
+        const newUser = {
+          id: Date.now(),
+          firstName: firstName.value.trim(),
+          lastName: lastName.value.trim(),
+          email: emailValue,
+          phone: phone.value.trim(),
+          password: password.value,
+          age: parseInt(age.value),
+          gender: Array.from(genderRadios).find(r => r.checked)?.value,
+          itemsPostedThisMonth: 0,
+          createdAt: new Date().toISOString()
+        };
+
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 500);
+      });
+
+      // === زر Google ===
+      document.getElementById('googleBtn').addEventListener('click', () => {
+        alert('Google Sign-Up would be integrated here.');
+      });
+
+      // تهيئة أولية للمتطلبات
+      updatePasswordStrengthAndRequirements();
+    })();
+  </script>
+</body>
+
+</html>

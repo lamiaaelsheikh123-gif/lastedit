@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Phoenix · About Us</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --bg: #f9fafc;
+            --surface: #ffffff;
+            --text-primary: #1e1e2f;
+            --text-secondary: #4a4a5e;
+            --accent-1: #ff8a4c;
+            --accent-2: #ff6b2b;
+            --gradient: linear-gradient(135deg, #ff8a4c, #ff4d4d);
+            --border: #eaeef2;
+            --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05);
+            --glow: rgba(255, 110, 64, 0.4);
+            --navbar-bg: rgba(255, 255, 255, 0.8);
+            --footer-bg: #1e1e2f;
+            --footer-text: #f0f0fa;
+            --card-bg: #ffffff;
+        }
+
+        body.dark {
+            --bg: #12121a;
+            --surface: #1e1e2a;
+            --text-primary: #f0f0fa;
+            --text-secondary: #b0b0c0;
+            --accent-1: #ff9f6e;
+            --accent-2: #ff7b3f;
+            --gradient: linear-gradient(135deg, #ff9f6e, #ff5e5e);
+            --border: #333344;
+            --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.7);
+            --glow: rgba(255, 140, 80, 0.6);
+            --navbar-bg: rgba(30, 30, 42, 0.9);
+            --footer-bg: #0b0b12;
+            --footer-text: #ddddff;
+            --card-bg: #1e1e2a;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.5;
+            transition: background-color 0.3s, color 0.2s;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ========== NAVBAR (موحد مع باقي الصفحات) ========== */
+        nav {
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(12px);
+            background: var(--navbar-bg);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-area img {
+            height: 52px;
+            width: auto;
+            border-radius: 12px;
+        }
+        .logo-text h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo-text span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: block;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-1);
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.8rem 1rem;
+            }
+            .logo-area img {
+                height: 44px;
+            }
+            .logo-text h2 {
+                font-size: 1.3rem;
+            }
+            .logo-text span {
+                font-size: 0.7rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* ===== HERO ===== */
+        .about-hero {
+            background: linear-gradient(135deg, rgba(255,140,76,0.08), rgba(255,77,77,0.05));
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .about-hero h1 {
+            font-size: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        .about-hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ===== Mission/Vision Cards ===== */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        .mission-card {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .mission-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-1);
+        }
+        .mission-icon {
+            font-size: 2.5rem;
+            color: var(--accent-1);
+            margin-bottom: 1rem;
+        }
+        .mission-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .mission-card p {
+            color: var(--text-secondary);
+        }
+
+        /* ===== Phoenix Story ===== */
+        .story-section {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            margin: 4rem 0;
+            flex-wrap: wrap;
+        }
+        .story-text {
+            flex: 2;
+        }
+        .story-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .story-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .story-icon {
+            flex: 1;
+            text-align: center;
+            background: linear-gradient(145deg, #ffefe2, #fff5ed);
+            border-radius: 60px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+        .story-icon i {
+            font-size: 6rem;
+            color: var(--accent-1);
+            filter: drop-shadow(0 8px 12px rgba(255,140,76,0.2));
+        }
+        body.dark .story-icon {
+            background: #2a2a3a;
+        }
+
+        /* ===== Stats Section with Counters ===== */
+        .stats-section {
+            background: var(--surface);
+            border-radius: 48px;
+            padding: 3rem 2rem;
+            margin: 4rem 0;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .stats-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== How It Works ===== */
+        .howitworks {
+            margin: 4rem 0;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .step {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .step-icon {
+            font-size: 2.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== Gallery (Donations images) ===== */
+        .gallery {
+            margin: 4rem 0;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .gallery-item {
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            background: #f0f0f0;
+            transition: transform 0.3s;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== Team Section ===== */
+        .team-section {
+            margin: 4rem 0;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-1);
+        }
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: white;
+        }
+        .team-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        .team-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: 0.3s;
+        }
+        .team-card:hover .team-social {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .team-social a {
+            color: var(--accent-1);
+            font-size: 1.3rem;
+            transition: 0.2s;
+        }
+        .team-social a:hover {
+            transform: scale(1.1);
+            color: var(--accent-2);
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 2rem 1.5rem 1rem;
+            margin-top: 3rem;
+            border-radius: 30px 30px 0 0;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.8rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .footer-col h4 {
+            margin-bottom: 0.8rem;
+        }
+        .footer-col a, .footer-col p {
+            color: #bdbddb;
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        .footer-col a:hover {
+            color: #ffa56e;
+        }
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #334;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .story-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-area">
+            <img src="photo_2026-02-17_19-01-20.jpg" alt="Phoenix">
+            <div class="logo-text">
+                <h2>Phoenix</h2>
+                <span>donate & trade</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="market.html">Market</a>
+            <a href="donate.html">Donate</a>
+            <a href="sell.html">Sell</a>
+            <a href="about.html" class="active">About</a>
+        </div>
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <div class="hamburger" id="hamburger">☰</div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="about-hero">
+            <div class="container">
+                <h1>Give your items a second chance</h1>
+                <p>We believe in rebirth, renewal, and community. Join us to turn the old into new opportunities.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Mission / Vision / Values -->
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Our Mission</h3>
+                    <p>Reduce waste and help the environment by giving used items a new life — whether through donation or smart trade.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Our Vision</h3>
+                    <p>To become Egypt’s leading platform combining social solidarity (donation) with intelligent exchange, creating a circular economy for everyone.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Our Values</h3>
+                    <p>Trust, sustainability, community impact, and innovation — building a better tomorrow, one item at a time.</p>
+                </div>
+            </div>
+
+            <!-- Phoenix Story -->
+            <div class="story-section">
+                <div class="story-text">
+                    <h2>The Phoenix Story 🔥</h2>
+                    <p>The Phoenix is a legendary bird that symbolizes rebirth, transformation, and hope. According to ancient mythology, it rises from its own ashes, starting a new life stronger than before.</p>
+                    <p>We chose the name Phoenix because it perfectly reflects the core idea of our platform. Just like the Phoenix, items that may seem old or no longer useful are given a second life through our marketplace. Instead of being wasted, they are reborn into something valuable for someone else.</p>
+                    <p>At the same time, our donation system allows users to transform unused belongings into acts of kindness, helping others and creating a positive impact in the community.</p>
+                    <p><strong>Phoenix is not just a platform — it is a cycle of renewal, where giving and reusing bring new beginnings.</strong></p>
+                </div>
+                <div class="story-icon">
+                    <i class="fas fa-fire"></i>
+                    <p style="margin-top: 1rem; font-weight: 600;">Reborn from the ordinary</p>
+                </div>
+            </div>
+
+            <!-- Impact Statistics with Counters -->
+            <div class="stats-section" id="statsSection">
+                <h2 style="margin-bottom: 2rem;">Our Impact So Far</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="1000">0</div>
+                        <div class="stat-label">Items Donated</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">Happy Families</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="200">0</div>
+                        <div class="stat-label">kg Waste Reduced</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="howitworks">
+                <h2 style="text-align: center;">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-list-ul"></i></div>
+                        <h3>1. List</h3>
+                        <p>Upload your unwanted items — for sale or donation.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-comments"></i></div>
+                        <h3>2. Connect</h3>
+                        <p>Chat with people who need or want your item.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-handshake"></i></div>
+                        <h3>3. Exchange</h3>
+                        <p>Meet safely and complete the exchange.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery: Moments of Exchange (Donations images) -->
+            <div class="gallery">
+                <h2 style="text-align: center;">Moments of Giving & Exchange</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="Donations01.jpg" alt="Exchange moment 1" onerror="this.src='https://via.placeholder.com/200?text=Image+1'"></div>
+                    <div class="gallery-item"><img src="Donations02.jpg" alt="Exchange moment 2" onerror="this.src='https://via.placeholder.com/200?text=Image+2'"></div>
+                    <div class="gallery-item"><img src="Donations03.jpg" alt="Exchange moment 3" onerror="this.src='https://via.placeholder.com/200?text=Image+3'"></div>
+                    <div class="gallery-item"><img src="Donations04.jpg" alt="Exchange moment 4" onerror="this.src='https://via.placeholder.com/200?text=Image+4'"></div>
+                    <div class="gallery-item"><img src="Donations05.jpg" alt="Exchange moment 5" onerror="this.src='https://via.placeholder.com/200?text=Image+5'"></div>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="team-section">
+                <h2 style="text-align: center;">Meet the Phoenix Team</h2>
+                <div class="team-grid">
+                    <!-- Lamiaa -->
+                    <div class="team-card">
+                        <div class="team-avatar">L</div>
+                        <h4>Lamiaa Elsheikh</h4>
+                        <p>UI/UX Designer & Frontend Developer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/lamiaa-elsheikh-272b3831a" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Abdallah -->
+                    <div class="team-card">
+                        <div class="team-avatar">A</div>
+                        <h4>Abdallah Samir</h4>
+                        <p>UI/UX Designer & Frontend Developer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/abdallah-samir-022b8a271" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Hana -->
+                    <div class="team-card">
+                        <div class="team-avatar">H</div>
+                        <h4>Hana El-Zeiny</h4>
+                        <p>AI & Machine Learning Engineer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/hana-el-zeiny-6974ab311" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Nada -->
+                    <div class="team-card">
+                        <div class="team-avatar">N</div>
+                        <h4>Nada El Kolaly</h4>
+                        <p>Backend Developer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/nada-elkolaly-3075b424b" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Mohamed Bahaa -->
+                    <div class="team-card">
+                        <div class="team-avatar">M</div>
+                        <h4>Mohamed Bahaa</h4>
+                        <p>Backend Developer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/mohamed-bahaa-9684b726a" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Osama -->
+                    <div class="team-card">
+                        <div class="team-avatar">O</div>
+                        <h4>Osama Mohamed Ali</h4>
+                        <p>Backend Developer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/osamamragab" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Marena -->
+                    <div class="team-card">
+                        <div class="team-avatar">M</div>
+                        <h4>Marena Emad</h4>
+                        <p>Flutter Developer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/marena-emad-b9a542272" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Ahmed El-Hamaky -->
+                    <div class="team-card">
+                        <div class="team-avatar">A</div>
+                        <h4>Ahmed El-Hamaky</h4>
+                        <p>Flutter Developer</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/ahmed-elhamaky-49440b312" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!-- Zyad Mohamed -->
+                    <div class="team-card">
+                        <div class="team-avatar">Z</div>
+                        <h4>Zyad Mohamed</h4>
+                        <p>Quality Assurance & Deployment Engineer</p>
+                        <div class="team-social">
+                            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Phoenix</h4>
+                <p>Reborn from the ordinary.</p>
+                <p>© 2025 Phoenix</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="market.html">Market</a>
+                <a href="donate.html">Donate</a>
+                <a href="sell.html">Sell</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Contact</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+                <p><i class="fas fa-envelope"></i> hello@phoenix.exchange</p>
+            </div>
+        </div>
+        <div class="copyright">Phoenix Community · Terms · Privacy</div>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const toggle = document.getElementById('themeToggle');
+        const icon = toggle.querySelector('i');
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            if (document.body.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Mobile hamburger menu (simple alert or redirect, but for demo we just show alert)
+        const hamburger = document.getElementById('hamburger');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                alert('Mobile menu: Please use desktop for full navigation or click links in footer.');
+            });
+        }
+
+        // Counter animation using Intersection Observer
+        const statNumbers = document.querySelectorAll('.stat-number');
+        let started = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !started) {
+                    started = true;
+                    statNumbers.forEach(el => {
+                        const target = parseInt(el.getAttribute('data-target'));
+                        let current = 0;
+                        const increment = target / 80;
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                el.innerText = Math.floor(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                el.innerText = target + '+';
+                            }
+                        };
+                        updateCounter();
+                    });
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsSection = document.getElementById('statsSection');
+        if (statsSection) observer.observe(statsSection);
+    </script>
+</body>
+</html>

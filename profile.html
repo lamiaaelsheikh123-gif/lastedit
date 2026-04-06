@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Phoenix · Profile</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --bg: #f9fafc;
+      --surface: #ffffff;
+      --text-primary: #1e1e2f;
+      --text-secondary: #4a4a5e;
+      --accent-1: #ff8a4c;
+      --accent-2: #ff6b2b;
+      --gradient: linear-gradient(135deg, #ff8a4c, #ff4d4d);
+      --border: #eaeef2;
+      --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05);
+      --glow: rgba(255, 110, 64, 0.4);
+      --navbar-bg: rgba(255, 255, 255, 0.8);
+      --footer-bg: #1e1e2f;
+      --footer-text: #f0f0fa;
+      --special-gradient: linear-gradient(145deg, #ffb347, #ff6b2b, #cc4d00);
+    }
+
+    body.dark {
+      --bg: #12121a;
+      --surface: #1e1e2a;
+      --text-primary: #f0f0fa;
+      --text-secondary: #b0b0c0;
+      --accent-1: #ff9f6e;
+      --accent-2: #ff7b3f;
+      --gradient: linear-gradient(135deg, #ff9f6e, #ff5e5e);
+      --border: #333344;
+      --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.7);
+      --glow: rgba(255, 140, 80, 0.6);
+      --navbar-bg: rgba(30, 30, 42, 0.9);
+      --footer-bg: #0b0b12;
+      --footer-text: #ddddff;
+      --special-gradient: linear-gradient(145deg, #ffb347, #ff7b3f, #aa3f00);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      transition: background-color 0.3s, color 0.2s;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle at 10% 30%, rgba(255, 140, 64, 0.03) 0%, transparent 25%),
+        radial-gradient(circle at 90% 70%, rgba(255, 100, 100, 0.03) 0%, transparent 30%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== NAVBAR الموحد ========== */
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: var(--navbar-bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .logo-area img {
+      height: 40px;
+      width: auto;
+      border-radius: 8px;
+    }
+
+    .logo-text h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+
+    .logo-text span {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      display: block;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-1);
+    }
+
+    .nav-links .app-link {
+      font-weight: 700;
+      color: var(--accent-1);
+      text-shadow: 0 0 5px var(--glow);
+    }
+
+    .app-link-mobile {
+      font-weight: 700;
+      color: var(--accent-1);
+      font-size: 0.9rem;
+      margin-left: auto;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      position: relative;
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .nav-icon:hover {
+      color: var(--accent-1);
+      transform: scale(1.05);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .profile-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .profile-badge i {
+      font-size: 1.2rem;
+    }
+
+    .profile-badge:hover {
+      background: var(--accent-1);
+      color: white;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid var(--accent-1);
+      color: var(--accent-1);
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      background: var(--accent-1);
+      color: white;
+      box-shadow: 0 0 15px var(--glow);
+    }
+
+    .hamburger {
+      display: block;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-primary);
+      margin-left: 0.5rem;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 250px;
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      transition: left 0.3s ease;
+      z-index: 200;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar .close-btn {
+      text-align: right;
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      margin-bottom: 1.2rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 1.1rem;
+      display: block;
+      padding: 0.5rem 0;
+    }
+
+    .sidebar a:hover {
+      color: var(--accent-1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 150;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* ===== رأس الملف الشخصي ===== */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+      background: var(--surface);
+      border-radius: 40px;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .profile-avatar {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      transition: transform 0.2s;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid var(--accent-1);
+      object-fit: cover;
+    }
+
+    .profile-actions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .profile-actions .icon-circle {
+      background: var(--surface);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: var(--shadow);
+    }
+
+    .profile-actions .icon-circle:hover {
+      background: var(--accent-1);
+      color: white;
+    }
+
+    .profile-info h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .profile-info .username {
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-info .username i {
+      color: var(--accent-1);
+    }
+
+    .profile-bio {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      max-width: 500px;
+      font-style: italic;
+    }
+
+    /* ===== إحصائيات ===== */
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 2rem 0 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 1.2rem;
+      flex: 1 1 160px;
+      text-align: center;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-card .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* ===== Tabs ===== */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin: 2rem 0 1rem;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .tab {
+      background: transparent;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 40px;
+      transition: 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--accent-1);
+      background: var(--surface);
+    }
+
+    .tab.active {
+      background: var(--accent-1);
+      color: white;
+    }
+
+    /* ===== قائمة المنتجات ===== */
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 2rem 0 1rem;
+    }
+
+    .section-heading h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .add-item-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px var(--glow);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .add-item-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .product-card {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      transition: 0.2s;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-1);
+    }
+
+    .product-card .edit-overlay {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .product-card .edit-overlay i {
+      background: var(--surface);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .product-card .edit-overlay i:hover {
+      background: var(--accent-1);
+      color: white;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 120px;
+      border-radius: 14px;
+      margin-bottom: 0.8rem;
+      overflow: hidden;
+      background: linear-gradient(145deg, #ffdab9, #ffe4cd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b95b1d;
+      font-size: 2rem;
+    }
+
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .product-meta {
+      display: flex;
+      gap: 1rem;
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      margin: 0.3rem 0;
+    }
+
+    .product-meta i {
+      margin-right: 0.2rem;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .product-value {
+      font-weight: 700;
+      color: var(--accent-2);
+      font-size: 1rem;
+    }
+
+    .owner-badge {
+      background: var(--accent-1);
+      color: white;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-active {
+      background: #4caf50;
+      color: white;
+    }
+
+    .status-pending {
+      background: #ff9800;
+      color: white;
+    }
+
+    .status-sold {
+      background: #f44336;
+      color: white;
+    }
+
+    /* ===== Modal (Edit Profile) ===== */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+
+    .modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      padding: 2.2rem 2rem;
+      border-radius: 40px;
+      max-width: 450px;
+      width: 90%;
+      text-align: left;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .modal-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .modal-content .input-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .modal-content label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      color: var(--accent-1);
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      transition: 0.2s;
+    }
+
+    .modal-content textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .modal-content input:focus,
+    .modal-content textarea:focus {
+      outline: none;
+      border-color: var(--accent-1);
+      box-shadow: 0 0 0 3px var(--glow);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .modal-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .modal-btn.outline {
+      background: transparent;
+      border: 2px solid var(--accent-1);
+      color: var(--accent-1);
+    }
+
+    .modal-btn:hover {
+      transform: scale(1.02);
+    }
+
+    /* ===== AI Chatbot مع Label محسّن ===== */
+    .chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chat-label {
+      background: var(--surface);
+      border: 1px solid var(--accent-1);
+      color: var(--accent-1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      box-shadow: var(--shadow);
+      cursor: default;
+      text-decoration: underline 1px dotted var(--accent-1);
+      text-underline-offset: 3px;
+      transition: 0.2s;
+    }
+
+    .chat-label:hover {
+      background: var(--accent-1);
+      color: white;
+      text-decoration: none;
+    }
+
+    .chat-circle {
+      background: var(--gradient);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      box-shadow: 0 8px 20px var(--glow);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .chat-circle:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-box {
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      width: 280px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 1.2rem;
+      display: none;
+      box-shadow: var(--shadow);
+    }
+
+    .chat-box.show {
+      display: block;
+    }
+
+    .chat-messages {
+      max-height: 200px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .chat-message {
+      background: var(--bg);
+      padding: 0.5rem;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .chat-message.bot {
+      background: var(--accent-1);
+      color: white;
+    }
+
+    .chat-box textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.7rem;
+      color: var(--text-primary);
+      resize: none;
+      font-size: 0.9rem;
+    }
+
+    .chat-box button {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+
+    /* ===== NEW NOTIFICATION DROPDOWN STYLES ===== */
+    .notification-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent-1);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.45rem;
+      border-radius: 50px;
+      min-width: 18px;
+      text-align: center;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .notification-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 360px;
+      max-width: 90vw;
+      background: var(--surface);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .notification-dropdown.show {
+      display: flex;
+    }
+
+    .dropdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dropdown-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .mark-read-btn {
+      background: none;
+      border: none;
+      color: var(--accent-1);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .mark-read-btn:hover {
+      text-decoration: underline;
+    }
+
+    .notifications-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .notification-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .notification-item:hover {
+      background: var(--bg);
+    }
+
+    .notification-icon {
+      font-size: 1.2rem;
+      min-width: 32px;
+      text-align: center;
+      color: var(--accent-1);
+    }
+
+    .notification-content {
+      flex: 1;
+    }
+
+    .notification-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .notification-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.2rem;
+    }
+
+    .notification-time {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+
+    .unread-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-1);
+      border-radius: 50%;
+      position: absolute;
+      right: 1rem;
+      top: 1.2rem;
+    }
+
+    .dropdown-footer {
+      padding: 0.8rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .dropdown-footer a {
+      color: var(--accent-1);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .dropdown-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== NEW MESSAGE DROPDOWN STYLES ===== */
+    .message-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .message-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent-1);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.45rem;
+      border-radius: 50px;
+      min-width: 18px;
+      text-align: center;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .message-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 360px;
+      max-width: 90vw;
+      background: var(--surface);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .message-dropdown.show {
+      display: flex;
+    }
+
+    .message-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .message-item:hover {
+      background: var(--bg);
+    }
+
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--accent-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .message-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .message-content {
+      flex: 1;
+    }
+
+    .message-sender {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .message-preview {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .message-time {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    .message-unread-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-1);
+      border-radius: 50%;
+      position: absolute;
+      right: 1rem;
+      top: 1.2rem;
+    }
+
+    /* ===== SIMPLE FOOTER ===== */
+    .simple-footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .simple-footer a {
+      color: var(--footer-text);
+      text-decoration: none;
+      margin: 0 0.3rem;
+      transition: 0.2s;
+    }
+
+    .simple-footer a:hover {
+      color: var(--accent-1);
+    }
+
+    .simple-footer span {
+      margin: 0 0.3rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 2rem;
+      }
+
+      nav {
+        padding: 0.8rem 2rem;
+      }
+
+      .logo-area img {
+        height: 52px;
+      }
+
+      .logo-text h2 {
+        font-size: 1.5rem;
+      }
+
+      .logo-text span {
+        font-size: 0.8rem;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+
+      .app-link-mobile {
+        display: none;
+      }
+
+      .hamburger {
+        display: none;
+      }
+
+      .sidebar,
+      .overlay {
+        display: none;
+      }
+
+      .profile-header {
+        padding: 2rem;
+      }
+
+      .profile-info h1 {
+        font-size: 2.2rem;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      .notification-dropdown,
+      .message-dropdown {
+        right: -10px;
+        width: calc(100vw - 20px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo-area">
+      <img src="photo_2026-02-17_19-01-20.jpg" alt="Phoenix">
+      <div class="logo-text">
+        <h2>Phoenix</h2>
+        <span>donate & trade</span>
+      </div>
+    </div>
+    <a href="#app" class="app-link-mobile">App</a>
+    <div class="nav-links">
+      <a href="dashboard.html">Home</a>
+      <a href="market.html">Market</a>
+      <a href="donate.html">Donate</a>
+      <a href="sell.html">Sell</a>
+      <a href="#app" class="app-link">App</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+      <!-- Notification Bell with wrapper and badge -->
+      <div class="notification-wrapper">
+        <i class="fas fa-bell nav-icon" id="notificationBell"></i>
+        <span class="notification-badge" id="notificationBadge">3</span>
+      </div>
+      <!-- Message Icon with wrapper and badge -->
+      <div class="message-wrapper">
+        <i class="fas fa-comment-dots nav-icon" id="messageIcon"></i>
+        <span class="message-badge" id="messageBadge">2</span>
+      </div>
+      <a href="profile.html" class="profile-badge">
+        <i class="fas fa-user"></i>
+      </a>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      <span class="hamburger" id="hamburger">☰</span>
+    </div>
+  </nav>
+
+  <div class="sidebar" id="sidebar">
+    <div class="close-btn" id="closeSidebar">✕</div>
+    <ul>
+      <li><a href="dashboard.html">Home</a></li>
+      <li><a href="market.html">Market</a></li>
+      <li><a href="donate.html">Donate</a></li>
+      <li><a href="sell.html">Sell</a></li>
+      <li><a href="#app">App</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="#" id="logoutSidebar">Logout</a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <main class="container">
+    <!-- رأس الملف الشخصي (سيتم تعبئته ديناميكياً) -->
+    <div class="profile-header">
+      <div class="profile-avatar" id="profileAvatar">
+        <img src="" alt="User Avatar" id="avatarImg">
+        <div class="profile-actions">
+          <div class="icon-circle" id="editProfileBtn" title="Settings"><i class="fas fa-cog"></i></div>
+          <div class="icon-circle" title="Messages"><i class="fas fa-envelope"></i></div>
+        </div>
+      </div>
+      <div class="profile-info">
+        <h1 id="displayName"></h1>
+        <div class="username" id="displayLocation">
+          <i class="fas fa-map-marker-alt"></i> <span id="locationText"></span>
+          <span>·</span>
+          <i class="fas fa-calendar"></i> Member since <span id="memberSince"></span>
+        </div>
+        <div class="profile-bio" id="displayBio">
+          <i class="fas fa-quote-left" style="color: var(--accent-1); font-size: 0.8rem;"></i>
+          <span id="bioText"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- إحصائيات (سيتم تحديثها عبر JS) -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="statListings">0</div>
+        <div class="stat-label">Active Listings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTrades">0</div>
+        <div class="stat-label">Successful Trades</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statRating">0.0</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statResponse">-</div>
+        <div class="stat-label">Response Time</div>
+      </div>
+    </div>
+
+    <!-- Tabs محدثة -->
+    <div class="tabs" id="tabsContainer">
+      <button class="tab active" data-tab="listings">My Listings</button>
+      <button class="tab" data-tab="selling">Selling</button>
+      <button class="tab" data-tab="donations">Donations</button>
+      <button class="tab" data-tab="favorites">Favorites</button>
+      <button class="tab" data-tab="messages">Messages</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </div>
+
+    <!-- محتوى التبويبات -->
+    <div id="listings-content" class="tab-content" style="display: block;">
+      <div class="section-heading">
+        <h2>My Listings</h2>
+        <a href="sell.html" class="add-item-btn"><i class="fas fa-plus"></i> Add New</a>
+      </div>
+      <div class="product-grid" id="listingsGrid"></div>
+    </div>
+
+    <div id="selling-content" class="tab-content" style="display: none;">
+      <h2 class="section-title">Items I'm Selling</h2>
+      <div class="product-grid" id="sellingGrid"></div>
+    </div>
+
+    <div id="donations-content" class="tab-content" style="display: none;">
+      <h2 class="section-title">Items I'm Donating</h2>
+      <div class="product-grid" id="donationsGrid"></div>
+    </div>
+
+    <div id="favorites-content" class="tab-content" style="display: none;">
+      <h2 class="section-title">My Favorites</h2>
+      <div class="product-grid" id="favoritesGrid"></div>
+    </div>
+
+    <div id="messages-content" class="tab-content" style="display: none;">
+      <h2 class="section-title">Messages</h2>
+      <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
+        <i class="fas fa-comment-dots" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+        No conversations yet. <a href="market.html" style="color: var(--accent-1);">Browse items</a> to start chatting.
+      </p>
+    </div>
+
+    <div id="settings-content" class="tab-content" style="display: none;">
+      <h2 class="section-title">Account Settings</h2>
+      <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Settings page coming soon. You can
+        edit your profile by clicking the gear icon.</p>
+    </div>
+
+    <div id="app" style="scroll-margin-top:70px;"></div>
+  </main>
+
+  <!-- Modal تعديل الملف الشخصي -->
+  <div class="modal" id="editProfileModal">
+    <div class="modal-content">
+      <h2>Edit Profile</h2>
+      <div class="input-group">
+        <label>Profile Image URL</label>
+        <input type="text" id="editAvatarUrl" placeholder="https://example.com/avatar.jpg">
+      </div>
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" id="editName" placeholder="Your name">
+      </div>
+      <div class="input-group">
+        <label>Location</label>
+        <input type="text" id="editLocation" placeholder="City, Country">
+      </div>
+      <div class="input-group">
+        <label>Bio</label>
+        <textarea id="editBio" placeholder="Tell us about yourself..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn" id="saveProfileBtn">Save Changes</button>
+        <button class="modal-btn outline" id="cancelProfileBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW SIMPLE FOOTER -->
+  <footer class="simple-footer">
+    <div>
+      © 2025 Phoenix •
+      <a href="#">About</a> •
+      <a href="#">Terms</a> •
+      <a href="#">Privacy</a>
+    </div>
+  </footer>
+
+  <!-- AI Chatbot مع Label محسّن (منقول من صفحة Index) -->
+  <div class="chatbot">
+    <span class="chat-label">Ask AI</span>
+    <div class="chat-circle" id="chatIcon"><i class="fas fa-robot"></i></div>
+    <div class="chat-box" id="chatBox">
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-message bot">👋 Hi! How can I help you today?</div>
+      </div>
+      <textarea id="chatInput" placeholder="Type your message..." rows="2"></textarea>
+      <button id="sendChat">Send</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // التحقق من وجود مستخدم مسجل الدخول
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      if (!currentUser) {
+        window.location.href = 'sign.html';
+        return;
+      }
+
+      // نسخة محلية من بيانات المستخدم (للتعديل)
+      let user = { ...currentUser };
+
+      // تحديث واجهة المستخدم بالبيانات
+      function updateProfileUI() {
+        const fullName = (user.firstName + ' ' + (user.lastName || '')).trim();
+        document.getElementById('displayName').textContent = fullName || 'User';
+        document.getElementById('avatarImg').src = user.avatar || 'https://i.pravatar.cc/120?u=' + (user.email || 'user');
+        document.getElementById('locationText').textContent = user.location || 'Cairo, Egypt';
+        document.getElementById('bioText').textContent = user.bio || 'Passionate about sustainable trading and tech.';
+        const joinDate = user.createdAt ? new Date(user.createdAt).getFullYear() : '2024';
+        document.getElementById('memberSince').textContent = joinDate;
+      }
+      updateProfileUI();
+
+      // بيانات المنتجات التجريبية (يمكن استبدالها بـ API)
+      let userProducts = JSON.parse(localStorage.getItem('userProducts')) || [
+        { id: 1, title: 'MacBook Pro 16" M3 Max', price: 2499, type: 'sale', status: 'active', icon: 'fa-laptop', views: 234, likes: 18, isFavorite: false },
+        { id: 2, title: 'Sony WH-1000XM5', price: 299, type: 'sale', status: 'pending', icon: 'fa-headphones', views: 156, likes: 12, isFavorite: false },
+        { id: 3, title: 'Canon EOS R6 II', price: 2199, type: 'sale', status: 'sold', icon: 'fa-camera', views: 189, likes: 24, isFavorite: false },
+        { id: 4, title: 'Winter Coat', price: 0, type: 'donation', status: 'active', icon: 'fa-tshirt', views: 45, likes: 5, isFavorite: false },
+        { id: 5, title: 'Gaming Chair', price: 130, type: 'sale', status: 'active', icon: 'fa-chair', views: 102, likes: 14, isFavorite: false },
+      ];
+
+      // تحديث الإحصائيات
+      function updateStats() {
+        const activeListings = userProducts.filter(p => p.status === 'active').length;
+        document.getElementById('statListings').textContent = activeListings;
+        document.getElementById('statTrades').textContent = userProducts.filter(p => p.status === 'sold').length;
+        document.getElementById('statRating').textContent = '4.9'; // ثابت
+        document.getElementById('statResponse').textContent = '< 2h';
+      }
+      updateStats();
+
+      // دالة مساعدة لعرض المنتجات في grid معين
+      function renderProducts(containerId, filterFn) {
+        const container = document.getElementById(containerId);
+        const filtered = userProducts.filter(filterFn);
+        if (filtered.length === 0) {
+          container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No items to display.</p>`;
+          return;
+        }
+        container.innerHTML = filtered.map(p => {
+          let statusClass = '';
+          let statusText = '';
+          if (p.status === 'active') { statusClass = 'status-active'; statusText = 'Active'; }
+          else if (p.status === 'pending') { statusClass = 'status-pending'; statusText = 'Pending'; }
+          else if (p.status === 'sold') { statusClass = 'status-sold'; statusText = 'Sold'; }
+          return `
+                    <div class="product-card" data-id="${p.id}">
+                        <div class="edit-overlay">
+                            <i class="fas fa-edit" title="Edit" onclick="editProduct(${p.id})"></i>
+                            <i class="fas fa-trash-alt" title="Delete" onclick="deleteProduct(${p.id})"></i>
+                        </div>
+                        <div class="product-img">
+                            <i class="fas ${p.icon}" style="font-size:2rem; color:#b95b1d;"></i>
+                        </div>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                        <div class="product-title">${p.title}</div>
+                        <div class="product-meta"><span><i class="far fa-eye"></i> ${p.views}</span> <span><i class="far fa-heart"></i> ${p.likes}</span></div>
+                        <div class="product-footer">
+                            <span class="product-value">${p.price === 0 ? 'Free' : '$' + p.price}</span>
+                            <span class="owner-badge">Owner</span>
+                        </div>
+                    </div>
+                `}).join('');
+      }
+
+      // عرض التبويب الحالي
+      function showTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        document.getElementById(tabId + '-content').style.display = 'block';
+        if (tabId === 'listings') renderProducts('listingsGrid', () => true);
+        else if (tabId === 'selling') renderProducts('sellingGrid', p => p.type === 'sale');
+        else if (tabId === 'donations') renderProducts('donationsGrid', p => p.type === 'donation');
+        else if (tabId === 'favorites') renderProducts('favoritesGrid', p => p.isFavorite);
+        // Messages and settings are static
+      }
+
+      // أحداث التبويبات
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          showTab(tab.dataset.tab);
+        });
+      });
+
+      // عرض التبويب الافتراضي
+      showTab('listings');
+
+      // دوال التعديل والحذف (عالمية)
+      window.editProduct = function (id) {
+        alert(`Edit product ${id} (محاكاة)`);
+      };
+
+      window.deleteProduct = function (id) {
+        if (confirm('Are you sure you want to delete this item?')) {
+          userProducts = userProducts.filter(p => p.id !== id);
+          localStorage.setItem('userProducts', JSON.stringify(userProducts));
+          const activeTab = document.querySelector('.tab.active').dataset.tab;
+          showTab(activeTab);
+          updateStats();
+        }
+      };
+
+      // ========== Edit Profile Modal ==========
+      const editBtn = document.getElementById('editProfileBtn');
+      const modal = document.getElementById('editProfileModal');
+      const cancelBtn = document.getElementById('cancelProfileBtn');
+      const saveBtn = document.getElementById('saveProfileBtn');
+
+      editBtn.addEventListener('click', () => {
+        document.getElementById('editAvatarUrl').value = user.avatar || '';
+        document.getElementById('editName').value = (user.firstName + ' ' + (user.lastName || '')).trim();
+        document.getElementById('editLocation').value = user.location || '';
+        document.getElementById('editBio').value = user.bio || '';
+        modal.classList.add('active');
+      });
+
+      cancelBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+      });
+
+      saveBtn.addEventListener('click', () => {
+        const newName = document.getElementById('editName').value.trim().split(' ');
+        user.firstName = newName[0] || user.firstName;
+        user.lastName = newName.slice(1).join(' ') || user.lastName;
+        user.avatar = document.getElementById('editAvatarUrl').value || user.avatar;
+        user.location = document.getElementById('editLocation').value || user.location;
+        user.bio = document.getElementById('editBio').value || user.bio;
+
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        updateProfileUI();
+        modal.classList.remove('active');
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+
+      // ========== Dark Mode ==========
+      const toggle = document.getElementById('themeToggle');
+      const icon = toggle.querySelector('i');
+      toggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        icon.classList.toggle('fa-sun');
+        icon.classList.toggle('fa-moon');
+      });
+
+      // ========== Sidebar ==========
+      const hamburger = document.getElementById('hamburger');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const closeBtn = document.getElementById('closeSidebar');
+
+      function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); }
+      function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); }
+      hamburger.addEventListener('click', openSidebar);
+      closeBtn.addEventListener('click', closeSidebar);
+      overlay.addEventListener('click', closeSidebar);
+
+      // ========== Logout ==========
+      function handleLogout() {
+        if (confirm('Are you sure you want to logout?')) {
+          localStorage.removeItem('currentUser');
+          window.location.href = 'index.html';
+        }
+      }
+      document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+      document.getElementById('logoutSidebar').addEventListener('click', (e) => {
+        e.preventDefault();
+        handleLogout();
+      });
+
+      // ========== Chatbot (منقول من صفحة Index) ==========
+      const chatIcon = document.getElementById('chatIcon');
+      const chatBox = document.getElementById('chatBox');
+      const chatMessages = document.getElementById('chatMessages');
+      const chatInput = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('sendChat');
+
+      chatIcon.addEventListener('click', () => { chatBox.classList.toggle('show'); });
+
+      function addMessage(text, isUser = false) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-message' + (isUser ? '' : ' bot');
+        msgDiv.textContent = text;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      sendBtn.addEventListener('click', () => {
+        const text = chatInput.value.trim();
+        if (text === '') return;
+        addMessage(text, true);
+        chatInput.value = '';
+        setTimeout(() => addMessage('Thanks! We\'ll reply soon. 😊'), 500);
+      });
+
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendBtn.click(); }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!chatBox.contains(e.target) && !chatIcon.contains(e.target)) chatBox.classList.remove('show');
+      });
+
+      // ========== NOTIFICATION DROPDOWN SCRIPT ==========
+      (function () {
+        const bell = document.getElementById('notificationBell');
+        const badge = document.getElementById('notificationBadge');
+        if (!bell) return;
+
+        let notifications = [
+          { id: 1, type: 'message', title: 'New message', description: 'Ahmed sent you a message about MacBook', time: '2 min ago', unread: true },
+          { id: 2, type: 'donation', title: 'Donation request', description: 'Someone wants your winter coat', time: '1 hour ago', unread: true },
+          { id: 3, type: 'system', title: 'Price update', description: 'Your listing price was changed', time: '3 hours ago', unread: true },
+          { id: 4, type: 'message', title: 'New offer', description: 'Received an offer for iPhone', time: 'yesterday', unread: false }
+        ];
+
+        function getIconClass(type) {
+          switch (type) {
+            case 'message': return 'fa-envelope';
+            case 'donation': return 'fa-heart';
+            case 'system': return 'fa-exclamation-triangle';
+            default: return 'fa-bell';
+          }
+        }
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'notification-dropdown';
+        dropdown.innerHTML = `
+          <div class="dropdown-header">
+            <h3>Notifications</h3>
+            <button class="mark-read-btn" id="markAllRead">Mark all as read</button>
+          </div>
+          <div class="notifications-list" id="notificationsList"></div>
+          <div class="dropdown-footer">
+            <a href="notifications.html" id="viewAllNotifications">View all notifications</a>
+          </div>
+        `;
+        document.body.appendChild(dropdown);
+
+        function renderNotifications() {
+          const listContainer = document.getElementById('notificationsList');
+          if (!listContainer) return;
+          const unreadCount = notifications.filter(n => n.unread).length;
+          badge.textContent = unreadCount > 0 ? unreadCount : '';
+          badge.style.display = unreadCount > 0 ? 'block' : 'none';
+          if (notifications.length === 0) {
+            listContainer.innerHTML = `<div style="padding: 2rem; text-align: center; color: var(--text-secondary);">No notifications</div>`;
+            return;
+          }
+          listContainer.innerHTML = notifications.map(notif => `
+            <div class="notification-item" data-id="${notif.id}">
+              <div class="notification-icon"><i class="fas ${getIconClass(notif.type)}"></i></div>
+              <div class="notification-content">
+                <div class="notification-title">${notif.title}</div>
+                <div class="notification-desc">${notif.description}</div>
+                <div class="notification-time">${notif.time}</div>
+              </div>
+              ${notif.unread ? '<span class="unread-dot"></span>' : ''}
+            </div>
+          `).join('');
+          document.querySelectorAll('.notification-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+              e.stopPropagation();
+              const id = parseInt(this.dataset.id);
+              const notif = notifications.find(n => n.id === id);
+              if (notif && notif.unread) {
+                notif.unread = false;
+                renderNotifications();
+              }
+            });
+          });
+        }
+
+        function markAllAsRead() {
+          notifications.forEach(n => n.unread = false);
+          renderNotifications();
+        }
+
+        function toggleDropdown(e) {
+          e.stopPropagation();
+          const rect = bell.getBoundingClientRect();
+          dropdown.style.top = (rect.bottom + window.scrollY + 5) + 'px';
+          dropdown.style.right = (window.innerWidth - rect.right - window.scrollX) + 'px';
+          dropdown.classList.toggle('show');
+        }
+
+        function closeDropdown(e) {
+          if (!dropdown.contains(e.target) && e.target !== bell && !bell.contains(e.target)) {
+            dropdown.classList.remove('show');
+          }
+        }
+
+        bell.addEventListener('click', toggleDropdown);
+        document.addEventListener('click', closeDropdown);
+        document.getElementById('markAllRead')?.addEventListener('click', markAllAsRead);
+        renderNotifications();
+      })();
+
+      // ========== MESSAGE DROPDOWN SCRIPT ==========
+      (function () {
+        const messageIcon = document.getElementById('messageIcon');
+        const messageBadge = document.getElementById('messageBadge');
+        if (!messageIcon) return;
+
+        // Sample conversations data
+        let conversations = [
+          { id: 1, sender: 'Ahmed Hassan', avatar: 'https://i.pravatar.cc/40?img=7', preview: 'Hey, is the MacBook still available?', time: '2 min ago', unread: true },
+          { id: 2, sender: 'Lamiaa Elsheikh', avatar: 'https://i.pravatar.cc/40?img=5', preview: 'Thanks for the donation!', time: '1 hour ago', unread: true },
+          { id: 3, sender: 'Mohamed Ali', avatar: 'https://i.pravatar.cc/40?img=3', preview: 'I am interested in the gaming chair', time: '3 hours ago', unread: false },
+          { id: 4, sender: 'Sara Mostafa', avatar: 'https://i.pravatar.cc/40?img=9', preview: 'Can you lower the price?', time: 'yesterday', unread: false }
+        ];
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'message-dropdown';
+        dropdown.innerHTML = `
+          <div class="dropdown-header">
+            <h3>Messages</h3>
+            <button class="mark-read-btn" id="markAllMessagesRead">Mark all as read</button>
+          </div>
+          <div class="notifications-list" id="messagesList"></div>
+          <div class="dropdown-footer">
+            <a href="messages.html" id="viewAllMessages">View all messages</a>
+          </div>
+        `;
+        document.body.appendChild(dropdown);
+
+        function renderMessages() {
+          const listContainer = document.getElementById('messagesList');
+          if (!listContainer) return;
+          const unreadCount = conversations.filter(c => c.unread).length;
+          messageBadge.textContent = unreadCount > 0 ? unreadCount : '';
+          messageBadge.style.display = unreadCount > 0 ? 'block' : 'none';
+          if (conversations.length === 0) {
+            listContainer.innerHTML = `<div style="padding: 2rem; text-align: center; color: var(--text-secondary);">No messages</div>`;
+            return;
+          }
+          listContainer.innerHTML = conversations.map(conv => `
+            <div class="message-item" data-id="${conv.id}">
+              <div class="message-avatar">
+                <img src="${conv.avatar}" alt="${conv.sender}" onerror="this.src='https://i.pravatar.cc/40?u=${conv.sender}'">
+              </div>
+              <div class="message-content">
+                <div class="message-sender">${conv.sender}</div>
+                <div class="message-preview">${conv.preview}</div>
+                <div class="message-time">${conv.time}</div>
+              </div>
+              ${conv.unread ? '<span class="message-unread-dot"></span>' : ''}
+            </div>
+          `).join('');
+          // Add click handler to each message item
+          document.querySelectorAll('.message-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+              e.stopPropagation();
+              const id = parseInt(this.dataset.id);
+              const conv = conversations.find(c => c.id === id);
+              if (conv && conv.unread) {
+                conv.unread = false;
+                renderMessages();
+              }
+              // Navigate to chat page (you can change the URL as needed)
+              window.location.href = `chat.html?conversation=${id}`;
+            });
+          });
+        }
+
+        function markAllMessagesAsRead() {
+          conversations.forEach(c => c.unread = false);
+          renderMessages();
+        }
+
+        function toggleMessageDropdown(e) {
+          e.stopPropagation();
+          const rect = messageIcon.getBoundingClientRect();
+          dropdown.style.top = (rect.bottom + window.scrollY + 5) + 'px';
+          dropdown.style.right = (window.innerWidth - rect.right - window.scrollX) + 'px';
+          dropdown.classList.toggle('show');
+        }
+
+        function closeMessageDropdown(e) {
+          if (!dropdown.contains(e.target) && e.target !== messageIcon && !messageIcon.contains(e.target)) {
+            dropdown.classList.remove('show');
+          }
+        }
+
+        messageIcon.addEventListener('click', toggleMessageDropdown);
+        document.addEventListener('click', closeMessageDropdown);
+        document.getElementById('markAllMessagesRead')?.addEventListener('click', markAllMessagesAsRead);
+        renderMessages();
+      })();
+    })();
+  </script>
+</body>
+
+</html>
