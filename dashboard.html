@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Phoenix · Dashboard</title>
-  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Google Fonts: Inter -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <style>
-    /* ========== جميع الأنماط الأصلية محفوظة، وسنضيف الأنماط الجديدة في نهاية الـ style ========== */
+    /* ========== الأنماط الأساسية (ديسكتوب) - بدون أي تغيير في الشكل الأصلي ========== */
     * {
       margin: 0;
       padding: 0;
@@ -35,6 +30,7 @@
       --footer-bg: #1e1e2f;
       --footer-text: #f0f0fa;
       --special-gradient: linear-gradient(145deg, #000000, #ff6b2b, #ff8a4c, #ff4d4d);
+      --divider-color: #eaeef2;
     }
 
     body.dark {
@@ -52,6 +48,7 @@
       --footer-bg: #0b0b12;
       --footer-text: #ddddff;
       --special-gradient: linear-gradient(145deg, #111111, #ff7b3f, #ff9f6e, #ff5e5e);
+      --divider-color: #333344;
     }
 
     body {
@@ -59,7 +56,6 @@
       color: var(--text-primary);
       line-height: 1.5;
       transition: background-color 0.3s, color 0.2s;
-      position: relative;
       overflow-x: hidden;
       min-height: 100vh;
     }
@@ -81,11 +77,9 @@
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 1rem;
-      position: relative;
-      z-index: 1;
     }
 
-    /* ===== NAVBAR ===== */
+    /* ===== NAVBAR الأصلي ===== */
     nav {
       position: sticky;
       top: 0;
@@ -127,7 +121,7 @@
     }
 
     .nav-links {
-      display: none;
+      display: flex;
       gap: 1.5rem;
     }
 
@@ -143,27 +137,10 @@
       color: var(--accent-1);
     }
 
-    .nav-links .app-link {
-      font-weight: 700;
-      color: var(--accent-1);
-      text-shadow: 0 0 5px var(--glow);
-    }
-
-    .app-link-mobile {
-      font-weight: 700;
-      color: var(--accent-1);
-      font-size: 0.9rem;
-      margin-left: auto;
-      margin-right: 0.5rem;
-      white-space: nowrap;
-      text-decoration: none;
-    }
-
     .nav-right {
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      position: relative;
     }
 
     .nav-icon {
@@ -231,13 +208,14 @@
     }
 
     .hamburger {
-      display: block;
+      display: none;
       font-size: 1.5rem;
       cursor: pointer;
       color: var(--text-primary);
       margin-left: 0.5rem;
     }
 
+    /* Sidebar (للموبايل) */
     .sidebar {
       position: fixed;
       top: 0;
@@ -271,16 +249,22 @@
       margin-bottom: 1.2rem;
     }
 
-    .sidebar a {
+    .sidebar a, .sidebar button {
       text-decoration: none;
       color: var(--text-primary);
       font-weight: 500;
       font-size: 1.1rem;
-      display: block;
-      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
     }
 
-    .sidebar a:hover {
+    .sidebar a:hover, .sidebar button:hover {
       color: var(--accent-1);
     }
 
@@ -299,7 +283,7 @@
       display: block;
     }
 
-    /* ===== القسم الترحيبي ===== */
+    /* Hero */
     .hero {
       padding: 2rem 0 1rem;
       text-align: center;
@@ -320,7 +304,7 @@
       color: var(--text-secondary);
     }
 
-    /* ===== بطاقات الإحصائيات ===== */
+    /* Stats Grid */
     .stats-grid {
       display: flex;
       justify-content: center;
@@ -359,7 +343,7 @@
       margin-top: 0.2rem;
     }
 
-    /* ===== قسم التوصيات ===== */
+    /* Recommended Section */
     .section-title {
       font-size: 1.6rem;
       margin: 2rem 0 1rem;
@@ -374,8 +358,8 @@
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
       margin: 1rem 0;
     }
 
@@ -386,7 +370,6 @@
       border: 1px solid var(--border);
       transition: 0.2s;
       cursor: pointer;
-      position: relative;
     }
 
     .product-card:hover {
@@ -396,7 +379,7 @@
 
     .product-img {
       width: 100%;
-      height: 120px;
+      height: 140px;
       border-radius: 14px;
       margin-bottom: 0.8rem;
       overflow: hidden;
@@ -451,89 +434,49 @@
       transform: scale(1.05);
     }
 
-    /* ===== قسم التطبيق ===== */
-    .app-download {
-      background: var(--surface);
-      border-radius: 30px;
-      padding: 2rem 1.5rem;
-      border: 1px solid var(--border);
-      margin: 2rem 0;
+    /* ========== FOOTER (مطابق تماماً لـ index.html) ========== */
+    .simple-footer {
+      margin-top: 3rem;
+      padding: 1rem;
       text-align: center;
+      border-top: 1px solid var(--divider-color);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
     }
 
-    .app-download h2 {
-      font-size: 1.6rem;
-    }
-
-    .app-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      margin-top: 1.5rem;
-    }
-
-    .store-btn {
-      display: inline-block;
-      background: #1e1e2f;
-      color: white;
-      padding: 0.8rem;
-      border-radius: 40px;
+    .simple-footer a {
+      color: var(--accent-1);
       text-decoration: none;
-      font-weight: 600;
-      transition: 0.2s;
     }
 
-    .store-btn:hover {
-      background: var(--accent-1);
-      transform: scale(1.02);
+    .simple-footer a:hover {
+      text-decoration: underline;
     }
 
-    .store-btn i {
-      margin-right: 0.5rem;
-    }
-
-    /* ===== أنماط الإشعارات والرسائل والفوتور الجديد ===== */
-    /* Notification Dropdown */
-    .notification-wrapper {
+    /* ========== DROPDOWNS (محسّن) ========== */
+    .notification-wrapper, .message-wrapper {
       position: relative;
       display: inline-flex;
       align-items: center;
     }
 
-    .notification-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--accent-1);
-      color: white;
-      font-size: 0.65rem;
-      font-weight: 700;
-      padding: 0.2rem 0.45rem;
-      border-radius: 50px;
-      min-width: 18px;
-      text-align: center;
-      line-height: 1;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .notification-dropdown {
+    .notification-dropdown, .message-dropdown {
       position: absolute;
       top: calc(100% + 8px);
       right: 0;
       width: 360px;
       max-width: 90vw;
       background: var(--surface);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       border: 1px solid var(--border);
-      z-index: 1000;
+      z-index: 1001;
       display: none;
       flex-direction: column;
       overflow: hidden;
     }
 
-    .notification-dropdown.show {
+    .notification-dropdown.show, .message-dropdown.show {
       display: flex;
     }
 
@@ -548,7 +491,6 @@
     .dropdown-header h3 {
       font-size: 1.1rem;
       font-weight: 600;
-      margin: 0;
     }
 
     .mark-read-btn {
@@ -556,24 +498,27 @@
       border: none;
       color: var(--accent-1);
       font-size: 0.8rem;
-      font-weight: 500;
       cursor: pointer;
-      transition: 0.2s;
     }
 
-    .mark-read-btn:hover {
-      text-decoration: underline;
-    }
-
-    .notifications-list {
-      max-height: 400px;
+    .notifications-list, .messages-list {
+      max-height: 320px;
       overflow-y: auto;
-      padding: 0;
-      margin: 0;
-      list-style: none;
     }
 
-    .notification-item {
+    .notifications-list::-webkit-scrollbar, .messages-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .notifications-list::-webkit-scrollbar-track, .messages-list::-webkit-scrollbar-track {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    .notifications-list::-webkit-scrollbar-thumb, .messages-list::-webkit-scrollbar-thumb {
+      background: var(--accent-1);
+      border-radius: 4px;
+    }
+
+    .notification-item, .message-item {
       display: flex;
       align-items: flex-start;
       gap: 0.8rem;
@@ -581,49 +526,51 @@
       border-bottom: 1px solid var(--border);
       cursor: pointer;
       transition: background 0.2s;
-      position: relative;
     }
-
-    .notification-item:hover {
+    .notification-item:hover, .message-item:hover {
       background: var(--bg);
     }
 
     .notification-icon {
       font-size: 1.2rem;
-      min-width: 32px;
-      text-align: center;
       color: var(--accent-1);
     }
 
-    .notification-content {
+    .notification-content, .message-content {
       flex: 1;
     }
 
-    .notification-title {
+    .notification-title, .message-sender {
       font-weight: 600;
       font-size: 0.9rem;
-      margin-bottom: 0.2rem;
     }
 
-    .notification-desc {
+    .notification-desc, .message-preview {
       font-size: 0.8rem;
       color: var(--text-secondary);
-      margin-bottom: 0.2rem;
     }
 
-    .notification-time {
+    .notification-time, .message-time {
       font-size: 0.7rem;
       color: var(--text-secondary);
+      margin-top: 0.2rem;
     }
 
-    .unread-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent-1);
+    .message-avatar {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      position: absolute;
-      right: 1rem;
-      top: 1.2rem;
+      background: var(--accent-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
+    .message-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .dropdown-footer {
@@ -631,325 +578,262 @@
       text-align: center;
       border-top: 1px solid var(--border);
     }
-
     .dropdown-footer a {
-      color: var(--accent-1);
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 500;
+      transition: 0.2s;
+      display: inline-block;
     }
-
     .dropdown-footer a:hover {
+      color: var(--accent-1);
       text-decoration: underline;
     }
 
-    /* Message Dropdown */
-    .message-wrapper {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .message-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: var(--accent-1);
-      color: white;
-      font-size: 0.65rem;
-      font-weight: 700;
-      padding: 0.2rem 0.45rem;
-      border-radius: 50px;
-      min-width: 18px;
-      text-align: center;
-      line-height: 1;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .message-dropdown {
-      position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      width: 360px;
-      max-width: 90vw;
-      background: var(--surface);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      z-index: 1000;
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .message-dropdown.show {
-      display: flex;
-    }
-
-    .message-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      padding: 1rem 1.2rem;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      transition: background 0.2s;
-      position: relative;
-    }
-
-    .message-item:hover {
-      background: var(--bg);
-    }
-
-    .message-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      background: var(--accent-1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    }
-
-    .message-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .message-content {
-      flex: 1;
-    }
-
-    .message-sender {
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .message-preview {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .message-time {
-      font-size: 0.7rem;
-      color: var(--text-secondary);
-      margin-top: 0.2rem;
-    }
-
-    .message-unread-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent-1);
-      border-radius: 50%;
-      position: absolute;
-      right: 1rem;
-      top: 1.2rem;
-    }
-
-    /* AI Chatbot (نسخة محدثة) */
+    /* Chatbot (تصميم فينيكس الأصلي) */
     .chatbot {
       position: fixed;
       bottom: 20px;
       right: 20px;
       z-index: 999;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
-    }
-
-    .chat-label {
-      background: var(--surface);
-      border: 1px solid var(--accent-1);
-      color: var(--accent-1);
-      padding: 0.3rem 0.8rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      box-shadow: var(--shadow);
-      cursor: default;
-      text-decoration: underline 1px dotted var(--accent-1);
-      text-underline-offset: 3px;
-      transition: 0.2s;
-    }
-
-    .chat-label:hover {
-      background: var(--accent-1);
-      color: white;
-      text-decoration: none;
+      gap: 0px;
     }
 
     .chat-circle {
-      background: var(--gradient);
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(145deg, #ff9f4a, #ff4d2e);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 1.5rem;
-      box-shadow: 0 8px 20px var(--glow);
       cursor: pointer;
-      transition: 0.2s;
+      box-shadow: 0 0 15px rgba(255, 80, 40, 0.8), 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: float-glow 2.2s infinite;
+      position: relative;
     }
 
-    .chat-circle:hover {
-      transform: scale(1.1);
+    .chat-circle img {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .chat-circle::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 100, 40, 0.6), transparent 70%);
+      animation: pulse-ring 1.8s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float-glow {
+      0% { transform: translateY(0px); box-shadow: 0 0 12px rgba(255,80,40,0.7); }
+      50% { transform: translateY(-6px); box-shadow: 0 0 28px rgba(255,100,50,1); }
+      100% { transform: translateY(0px); box-shadow: 0 0 12px rgba(255,80,40,0.7); }
+    }
+    @keyframes pulse-ring {
+      0% { opacity: 0.6; transform: scale(1); }
+      70% { opacity: 0; transform: scale(1.3); }
+      100% { opacity: 0; transform: scale(1.3); }
+    }
+
+    .chat-label {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      color: #ffaa66;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 30px;
+      margin-top: 6px;
+      cursor: pointer;
+      border: 1px solid #ff8a4c;
     }
 
     .chat-box {
       position: absolute;
-      bottom: 70px;
+      bottom: 80px;
       right: 0;
-      width: 280px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 1.2rem;
+      width: 90vw;
+      max-width: 450px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       display: none;
-      box-shadow: var(--shadow);
+      flex-direction: column;
+      overflow: hidden;
     }
-
+    body.dark .chat-box {
+      background: rgba(30, 30, 42, 0.85);
+    }
     .chat-box.show {
-      display: block;
+      display: flex;
     }
 
+    .chat-header {
+      padding: 1rem 1.2rem;
+      background: rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+    }
+    .chat-header h4 {
+      font-weight: 700;
+      color: var(--accent-1);
+    }
+    .close-chat {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
     .chat-messages {
-      max-height: 200px;
+      flex: 1;
+      padding: 1rem;
       overflow-y: auto;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-
     .chat-message {
-      background: var(--bg);
-      padding: 0.5rem;
-      border-radius: 12px;
-      margin-bottom: 0.5rem;
-    }
-
-    .chat-message.bot {
-      background: var(--accent-1);
-      color: white;
-    }
-
-    .chat-box textarea {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 0.7rem;
+      max-width: 85%;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      background: var(--surface);
       color: var(--text-primary);
-      resize: none;
-      font-size: 0.9rem;
+      align-self: flex-start;
+      border: 1px solid var(--border);
     }
-
-    .chat-box button {
+    .chat-message.bot {
       background: var(--gradient);
       color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      width: 100%;
     }
-
-    /* Simple Footer */
-    .simple-footer {
-      background: var(--footer-bg);
-      color: var(--footer-text);
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      margin-top: 3rem;
+    .chat-input-area {
+      display: flex;
+      padding: 10px;
+      gap: 8px;
       border-top: 1px solid var(--border);
     }
-
-    .simple-footer a {
-      color: var(--footer-text);
-      text-decoration: none;
-      margin: 0 0.3rem;
-      transition: 0.2s;
+    .chat-input-area textarea {
+      flex: 1;
+      background: var(--surface);
+      border: none;
+      border-radius: 40px;
+      padding: 8px 14px;
+      resize: none;
+      font-size: 0.8rem;
+    }
+    .chat-input-area button {
+      background: var(--gradient);
+      border: none;
+      border-radius: 40px;
+      padding: 0 18px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .simple-footer a:hover {
-      color: var(--accent-1);
-    }
-
-    @media (min-width: 768px) {
-      .container {
-        padding: 0 2rem;
-      }
-
-      nav {
-        padding: 0.8rem 2rem;
-      }
-
-      .logo-area img {
-        height: 52px;
-      }
-
-      .logo-text h2 {
-        font-size: 1.5rem;
-      }
-
-      .logo-text span {
-        font-size: 0.8rem;
-      }
-
+    /* ========== RESPONSIVE (للموبايل فقط) ========== */
+    @media (max-width: 768px) {
       .nav-links {
-        display: flex;
-      }
-
-      .app-link-mobile {
         display: none;
       }
+      .nav-right .theme-toggle,
+      .nav-right .notification-wrapper,
+      .nav-right .message-wrapper,
+      .nav-right .profile-badge,
+      .nav-right .logout-btn {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+      }
+      .stat-item {
+        min-width: auto;
+      }
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .product-img {
+        height: 120px;
+      }
+      body {
+        padding-bottom: 70px;
+      }
+      /* Bottom Navigation (Instagram style, 4 icons) */
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0.6rem 0.8rem;
+        z-index: 90;
+      }
+      .bottom-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.7rem;
+        transition: 0.2s;
+      }
+      .bottom-nav-item i {
+        font-size: 1.3rem;
+      }
+      .bottom-nav-item.active,
+      .bottom-nav-item:hover {
+        color: var(--accent-1);
+      }
+      /* رفع الشات بوت فوق البار السفلي */
+      .chatbot {
+        bottom: 80px;
+      }
+    }
 
+    @media (min-width: 769px) {
       .hamburger {
         display: none;
       }
-
-      .sidebar,
-      .overlay {
+      .bottom-nav {
         display: none;
-      }
-
-      .hero h1 {
-        font-size: 3rem;
-      }
-
-      .product-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .app-buttons {
-        flex-direction: row;
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-
-      .notification-dropdown,
-      .message-dropdown {
-        right: -10px;
-        width: calc(100vw - 20px);
       }
     }
   </style>
 </head>
-
 <body>
+
+  <!-- ========== NAVBAR ========== -->
   <nav>
     <div class="logo-area">
       <img src="photo_2026-02-17_19-01-20.jpg" alt="Phoenix">
@@ -958,25 +842,19 @@
         <span>donate & trade</span>
       </div>
     </div>
-    <a href="#app-download" class="app-link-mobile">App</a>
     <div class="nav-links">
       <a href="#">Home</a>
       <a href="market.html">Market</a>
       <a href="donate.html">Donate</a>
       <a href="sell.html">Sell</a>
-      <a href="#app-download" class="app-link">App</a>
     </div>
     <div class="nav-right">
       <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-      <!-- Notification Bell -->
       <div class="notification-wrapper">
         <i class="fas fa-bell nav-icon" id="notificationBell"></i>
-        <span class="notification-badge" id="notificationBadge">3</span>
       </div>
-      <!-- Message Icon -->
       <div class="message-wrapper">
         <i class="fas fa-comment-dots nav-icon" id="messageIcon"></i>
-        <span class="message-badge" id="messageBadge">2</span>
       </div>
       <a href="profile.html" class="profile-badge">
         <i class="fas fa-user"></i>
@@ -986,6 +864,7 @@
     </div>
   </nav>
 
+  <!-- ========== SIDEBAR (للموبايل فقط) ========== -->
   <div class="sidebar" id="sidebar">
     <div class="close-btn" id="closeSidebar">✕</div>
     <ul>
@@ -993,89 +872,74 @@
       <li><a href="market.html">Market</a></li>
       <li><a href="donate.html">Donate</a></li>
       <li><a href="sell.html">Sell</a></li>
-      <li><a href="#app-download">App</a></li>
       <li><a href="profile.html">Profile</a></li>
       <li><a href="#" id="logoutSidebar">Logout</a></li>
+      <li><button id="sidebarDarkMode"><i class="fas fa-moon"></i> Dark Mode</button></li>
     </ul>
   </div>
   <div class="overlay" id="overlay"></div>
 
   <main class="container">
-    <section class="hero">
-      <h1>Welcome back, start exploring</h1>
+    <div class="hero">
+      <h1 id="welcomeMsg">Welcome back!</h1>
       <p>Discover items donated or sold by the community near you.</p>
-    </section>
-
-    <div class="stats-grid">
-      <div class="stat-item"><span class="stat-number">12</span>
-        <div class="stat-label">Active Listings</div>
-        <div class="stat-note">+2 this week</div>
-      </div>
-      <div class="stat-item"><span class="stat-number">47</span>
-        <div class="stat-label">Successful Trades</div>
-        <div class="stat-note">⭐ 4.9 avg</div>
-      </div>
-      <div class="stat-item"><span class="stat-number">4.8</span>
-        <div class="stat-label">Average Rating</div>
-        <div class="stat-note">from 89 reviews</div>
-      </div>
-      <div class="stat-item"><span class="stat-number">
-          < 2h</span>
-            <div class="stat-label">Response Time</div>
-            <div class="stat-note">very fast</div>
-      </div>
     </div>
 
-    <section id="recommended">
-      <h2 class="section-title">Recommended <span>for you</span></h2>
-      <div class="product-grid" id="recommendedGrid"></div>
-    </section>
+    <!-- Stats Grid (جميع القيم تبدأ من صفر) -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-item"><span class="stat-number" id="statActiveListings">0</span><div class="stat-label">Active Listings</div><div class="stat-note">—</div></div>
+      <div class="stat-item"><span class="stat-number" id="statTrades">0</span><div class="stat-label">Successful Trades</div><div class="stat-note">⭐ 0.0</div></div>
+      <div class="stat-item"><span class="stat-number" id="statRating">0.0</span><div class="stat-label">Average Rating</div><div class="stat-note">from 0 reviews</div></div>
+      <div class="stat-item"><span class="stat-number" id="statResponse">N/A</span><div class="stat-label">Response Time</div><div class="stat-note">—</div></div>
+    </div>
 
-    <section id="app-download">
-      <div class="app-download">
-        <h2>Take Phoenix with you anywhere</h2>
-        <p>Fast & Easy · Real-time Chat · Location-based</p>
-        <div class="app-buttons">
-          <a href="#" class="store-btn" target="_blank"><i class="fab fa-apple"></i> App Store</a>
-          <a href="#" class="store-btn" target="_blank"><i class="fab fa-google-play"></i> Google Play</a>
-        </div>
-      </div>
-    </section>
+    <!-- Recommended Section -->
+    <h2 class="section-title">Recommended <span>for you</span></h2>
+    <div id="recommended-container" class="product-grid"></div>
   </main>
 
-  <!-- Simple Footer (بدلاً من الفوتر القديم) -->
-  <footer class="simple-footer">
-    <div>© 2025 Phoenix • <a href="#">About</a> • <a href="#">Terms</a> • <a href="#">Privacy</a></div>
-  </footer>
+  <!-- ========== FOOTER (مطابق لـ index.html) ========== -->
+  <div class="simple-footer">
+    Copyright © 2026 Phoenix - <a href="about.html">about</a>
+  </div>
 
-  <!-- AI Chatbot (نسخة محدثة) -->
+  <!-- ========== BOTTOM NAV (للموبايل فقط) ========== -->
+  <div class="bottom-nav">
+    <a href="#" class="bottom-nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="market.html" class="bottom-nav-item"><i class="fas fa-store"></i><span>Market</span></a>
+    <a href="#" id="bottomMessagesNav" class="bottom-nav-item"><i class="fas fa-comment-dots"></i><span>Messages</span></a>
+    <a href="#" id="bottomNotificationsNav" class="bottom-nav-item"><i class="fas fa-bell"></i><span>Alerts</span></a>
+  </div>
+
+  <!-- ========== CHATBOT ========== -->
   <div class="chatbot">
-    <span class="chat-label">Ask AI</span>
-    <div class="chat-circle" id="chatIcon"><i class="fas fa-robot"></i></div>
+    <div class="chat-circle" id="chatIcon">
+      <img src="photo_2026-02-17_19-01-20.jpg" alt="Phoenix AI">
+    </div>
+    <span class="chat-label" id="chatLabel">Ask AI</span>
     <div class="chat-box" id="chatBox">
-      <div class="chat-messages" id="chatMessages">
-        <div class="chat-message bot">👋 Hi! How can I help you today?</div>
+      <div class="chat-header">
+        <h4><i class="fas fa-feather-alt"></i> Phoenix Personal AI Assistant</h4>
+        <button class="close-chat" id="closeChatBtn">✕</button>
       </div>
-      <textarea id="chatInput" placeholder="Type your message..." rows="2"></textarea>
-      <button id="sendChat">Send</button>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-message bot">👋 Hi! I'm Phoenix AI. How can I help you today?</div>
+      </div>
+      <div class="chat-input-area">
+        <textarea id="chatInput" placeholder="Type your message..." rows="1"></textarea>
+        <button id="sendChat">Send</button>
+      </div>
     </div>
   </div>
 
   <script>
-    // ========== AUTHENTICATION GUARD ==========
-    const currentUser = localStorage.getItem('currentUser');
-    if (!currentUser) { window.location.href = 'sign.html'; throw new Error('Redirect'); }
-    let user = null;
-    try { user = JSON.parse(currentUser); } catch (e) { user = { email: 'User' }; }
-
-    let displayName = '';
-    if (user.firstName && user.lastName) displayName = `${user.firstName} ${user.lastName}`;
-    else if (user.firstName) displayName = user.firstName;
-    else if (user.email) displayName = user.email.split('@')[0];
-    else displayName = 'User';
-
-    const heroTitle = document.querySelector('.hero h1');
-    if (heroTitle) heroTitle.textContent = `Welcome back, ${displayName}`;
+    // ========== AUTHENTICATION ==========
+    const currentUserRaw = localStorage.getItem('currentUser');
+    if (!currentUserRaw) { window.location.href = 'sign.html'; }
+    let user = { firstName: 'Guest' };
+    try { user = JSON.parse(currentUserRaw); } catch(e) { user = { email: 'User' }; }
+    const displayName = (user.firstName && user.lastName) ? `${user.firstName} ${user.lastName}` : (user.firstName || user.email?.split('@')[0] || 'User');
+    document.getElementById('welcomeMsg').innerHTML = `Welcome back, ${displayName}`;
 
     // تحديث أيقونة البروفايل بالحرف الأول
     const profileBadge = document.querySelector('.profile-badge');
@@ -1087,245 +951,333 @@
       letterSpan.textContent = firstLetter;
       letterSpan.style.fontWeight = '600';
       letterSpan.style.fontSize = '1.2rem';
-      letterSpan.style.color = 'var(--text-primary)';
       profileBadge.appendChild(letterSpan);
     }
 
-    // ========== منتجات التوصيات ==========
-    const recommendedProducts = [
-      { id: 101, title: 'Vintage Camera', price: 210, icon: 'Old Camera.png', user: 'Ahmed' },
-      { id: 102, title: 'Yoga Mat', price: 25, icon: 'Yoga.png', user: 'Lamiaa' },
-      { id: 103, title: 'Wireless Headphones', price: 89, icon: 'headphones.png', user: 'Tarek' },
-      { id: 104, title: 'Smart Watch', price: 199, icon: 'Smart Watch.png', user: 'Mohamed' }
-    ];
+    // ========== دالة تحديث الإحصائيات (تبقى صفر حتى يتم جلب بيانات حقيقية) ==========
+    function updateStats(data) {
+      document.getElementById('statActiveListings').innerText = data.activeListings || 0;
+      document.getElementById('statTrades').innerText = data.successfulTrades || 0;
+      document.getElementById('statRating').innerText = (data.averageRating || 0).toFixed(1);
+      document.getElementById('statResponse').innerText = data.responseTime || 'N/A';
+      const statNotes = document.querySelectorAll('.stat-note');
+      if (statNotes[0]) statNotes[0].innerHTML = data.activeListings > 0 ? '+2 this week' : '—';
+      if (statNotes[1]) statNotes[1].innerHTML = `⭐ ${(data.averageRating || 0).toFixed(1)} avg`;
+      if (statNotes[2]) statNotes[2].innerHTML = `from ${data.successfulTrades || 0} reviews`;
+    }
+    updateStats({ activeListings: 0, successfulTrades: 0, averageRating: 0, responseTime: 'N/A' });
 
-    const recommendedGrid = document.getElementById('recommendedGrid');
-    function renderRecommended() {
-      recommendedGrid.innerHTML = recommendedProducts.map(p => `
-                <div class="product-card">
-                    <div class="product-img"><img src="${p.icon}" alt="${p.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\\'fas fa-image\\' style=\\'font-size:3rem; color:#b95b1d;\\'></i>'"></div>
-                    <div class="product-title">${p.title}</div>
-                    <div class="product-user">${p.user} · $${p.price}</div>
-                    <div class="product-footer">
-                        <span class="product-value">$${p.price}</span>
-                        <a href="product.html?id=${p.id}" class="trade-btn">View</a>
-                    </div>
-                </div>
-            `).join('');
+    // ========== دالة عرض المنتجات ==========
+    function renderProducts(products) {
+      const container = document.getElementById('recommended-container');
+      if (!products.length) {
+        container.innerHTML = '<div style="text-align:center; padding:2rem;">No products available</div>';
+        return;
+      }
+      container.innerHTML = products.map(p => `
+        <div class="product-card" data-id="${p.id}">
+          <div class="product-img"><img src="${p.image_url}" alt="${p.title}" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-image\\' style=\\'font-size:2rem; color:var(--accent-1);\\'></i>'"></div>
+          <div class="product-title">${p.title}</div>
+          <div class="product-user">${p.user}</div>
+          <div class="product-footer">
+            <span class="product-value">$${p.price}</span>
+            <button class="trade-btn" data-id="${p.id}">View</button>
+          </div>
+        </div>
+      `).join('');
       document.querySelectorAll('.trade-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-          const match = btn.getAttribute('href').match(/id=(\d+)/);
-          if (match && match[1]) {
-            const productId = parseInt(match[1]);
-            const selected = recommendedProducts.find(p => p.id === productId);
-            if (selected) localStorage.setItem('selectedProduct', JSON.stringify(selected));
-          }
+          e.stopPropagation();
+          goToProductPage(parseInt(btn.dataset.id));
+        });
+      });
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', () => {
+          goToProductPage(parseInt(card.dataset.id));
         });
       });
     }
-    renderRecommended();
+
+    const sampleProducts = [
+      { id: 101, title: 'Vintage Camera', price: 210, image_url: 'Old Camera.png', user: 'Ahmed' },
+      { id: 102, title: 'Yoga Mat', price: 25, image_url: 'Yoga.png', user: 'Lamiaa' },
+      { id: 103, title: 'Wireless Headphones', price: 89, image_url: 'headphones.png', user: 'Tarek' },
+      { id: 104, title: 'Smart Watch', price: 199, image_url: 'Smart Watch.png', user: 'Mohamed' }
+    ];
+    renderProducts(sampleProducts);
+
+    // ========== دالة الانتقال إلى صفحة المنتج ==========
+    window.goToProductPage = function(productId) {
+      window.location.href = `product.html?id=${productId}`;
+    };
 
     // ========== Dark Mode ==========
     const toggle = document.getElementById('themeToggle');
-    const icon = toggle.querySelector('i');
-    toggle.addEventListener('click', () => {
+    const sidebarDarkBtn = document.getElementById('sidebarDarkMode');
+    function applyDarkMode() {
       document.body.classList.toggle('dark');
-      icon.classList.toggle('fa-sun');
-      icon.classList.toggle('fa-moon');
-    });
+      const icon = toggle.querySelector('i');
+      if (document.body.classList.contains('dark')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+        if (sidebarDarkBtn) sidebarDarkBtn.querySelector('i').className = 'fas fa-sun';
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+        if (sidebarDarkBtn) sidebarDarkBtn.querySelector('i').className = 'fas fa-moon';
+      }
+    }
+    toggle.addEventListener('click', applyDarkMode);
+    if (sidebarDarkBtn) sidebarDarkBtn.addEventListener('click', applyDarkMode);
 
     // ========== Sidebar ==========
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
-    const closeBtn = document.getElementById('closeSidebar');
+    const closeSidebarBtn = document.getElementById('closeSidebar');
     function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); }
     function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); }
     hamburger.addEventListener('click', openSidebar);
-    closeBtn.addEventListener('click', closeSidebar);
+    closeSidebarBtn.addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId && targetId !== '#') {
-          const targetEl = document.querySelector(targetId);
-          if (targetEl) {
-            const y = targetEl.getBoundingClientRect().top + window.pageYOffset - 70;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-          }
-        }
-        closeSidebar();
-      });
+    document.querySelectorAll('.sidebar a, .sidebar button').forEach(el => {
+      if (el.id !== 'logoutSidebar' && el.id !== 'sidebarDarkMode') {
+        el.addEventListener('click', closeSidebar);
+      }
     });
 
     // ========== Logout ==========
-    function handleLogout() {
+    function logout() {
       if (confirm('Are you sure you want to logout?')) {
         localStorage.removeItem('currentUser');
         window.location.href = 'index.html';
       }
     }
-    document.getElementById('logoutBtn').addEventListener('click', handleLogout);
-    document.getElementById('logoutSidebar').addEventListener('click', (e) => { e.preventDefault(); handleLogout(); });
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('logoutSidebar').addEventListener('click', (e) => { e.preventDefault(); logout(); });
 
-    // ========== NOTIFICATION DROPDOWN ==========
-    (function () {
-      const bell = document.getElementById('notificationBell');
-      const badge = document.getElementById('notificationBadge');
-      if (!bell) return;
-      let notifications = [
-        { id: 1, type: 'message', title: 'New message', description: 'Ahmed sent you a message about MacBook', time: '2 min ago', unread: true },
-        { id: 2, type: 'donation', title: 'Donation request', description: 'Someone wants your winter coat', time: '1 hour ago', unread: true },
-        { id: 3, type: 'system', title: 'Price update', description: 'Your listing price was changed', time: '3 hours ago', unread: true },
-        { id: 4, type: 'message', title: 'New offer', description: 'Received an offer for iPhone', time: 'yesterday', unread: false }
-      ];
-      function getIconClass(type) {
-        switch (type) { case 'message': return 'fa-envelope'; case 'donation': return 'fa-heart'; case 'system': return 'fa-exclamation-triangle'; default: return 'fa-bell'; }
-      }
-      const dropdown = document.createElement('div');
-      dropdown.className = 'notification-dropdown';
-      dropdown.innerHTML = `
-                <div class="dropdown-header"><h3>Notifications</h3><button class="mark-read-btn" id="markAllRead">Mark all as read</button></div>
-                <div class="notifications-list" id="notificationsList"></div>
-                <div class="dropdown-footer"><a href="notifications.html">View all notifications</a></div>
-            `;
-      document.body.appendChild(dropdown);
-      function renderNotifications() {
-        const listContainer = document.getElementById('notificationsList');
-        if (!listContainer) return;
-        const unreadCount = notifications.filter(n => n.unread).length;
-        badge.textContent = unreadCount > 0 ? unreadCount : '';
-        badge.style.display = unreadCount > 0 ? 'block' : 'none';
-        if (notifications.length === 0) { listContainer.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--text-secondary);">No notifications</div>`; return; }
-        listContainer.innerHTML = notifications.map(notif => `
-                    <div class="notification-item" data-id="${notif.id}">
-                        <div class="notification-icon"><i class="fas ${getIconClass(notif.type)}"></i></div>
-                        <div class="notification-content">
-                            <div class="notification-title">${notif.title}</div>
-                            <div class="notification-desc">${notif.description}</div>
-                            <div class="notification-time">${notif.time}</div>
-                        </div>
-                        ${notif.unread ? '<span class="unread-dot"></span>' : ''}
-                    </div>
-                `).join('');
-        document.querySelectorAll('.notification-item').forEach(item => {
-          item.addEventListener('click', function (e) {
-            e.stopPropagation();
-            const id = parseInt(this.dataset.id);
-            const notif = notifications.find(n => n.id === id);
-            if (notif && notif.unread) { notif.unread = false; renderNotifications(); }
-          });
-        });
-      }
-      function markAllAsRead() { notifications.forEach(n => n.unread = false); renderNotifications(); }
-      function toggleDropdown(e) {
+    // ========== DROPDOWNS LOGIC (mutual exclusion + click outside + chat redirection) ==========
+    let activeDropdown = null;
+
+    function closeAllDropdowns() {
+      const notifDropdown = document.querySelector('.notification-dropdown');
+      const msgDropdown = document.querySelector('.message-dropdown');
+      if (notifDropdown) notifDropdown.classList.remove('show');
+      if (msgDropdown) msgDropdown.classList.remove('show');
+      activeDropdown = null;
+    }
+
+    function openDropdown(type) {
+      closeAllDropdowns();
+      const dropdown = document.querySelector(`.${type}-dropdown`);
+      if (dropdown) dropdown.classList.add('show');
+      activeDropdown = type;
+    }
+
+    // Notification Bell
+    const bell = document.getElementById('notificationBell');
+    if (bell) {
+      bell.addEventListener('click', (e) => {
         e.stopPropagation();
-        const rect = bell.getBoundingClientRect();
-        dropdown.style.top = (rect.bottom + window.scrollY + 5) + 'px';
-        dropdown.style.right = (window.innerWidth - rect.right - window.scrollX) + 'px';
-        dropdown.classList.toggle('show');
-      }
-      function closeDropdown(e) { if (!dropdown.contains(e.target) && e.target !== bell && !bell.contains(e.target)) dropdown.classList.remove('show'); }
-      bell.addEventListener('click', toggleDropdown);
-      document.addEventListener('click', closeDropdown);
-      document.getElementById('markAllRead')?.addEventListener('click', markAllAsRead);
-      renderNotifications();
-    })();
-
-    // ========== MESSAGE DROPDOWN ==========
-    (function () {
-      const messageIcon = document.getElementById('messageIcon');
-      const messageBadge = document.getElementById('messageBadge');
-      if (!messageIcon) return;
-      let conversations = [
-        { id: 1, sender: 'Ahmed Hassan', avatar: 'https://i.pravatar.cc/40?img=7', preview: 'Hey, is the MacBook still available?', time: '2 min ago', unread: true },
-        { id: 2, sender: 'Lamiaa Elsheikh', avatar: 'https://i.pravatar.cc/40?img=5', preview: 'Thanks for the donation!', time: '1 hour ago', unread: true },
-        { id: 3, sender: 'Mohamed Ali', avatar: 'https://i.pravatar.cc/40?img=3', preview: 'I am interested in the gaming chair', time: '3 hours ago', unread: false },
-        { id: 4, sender: 'Sara Mostafa', avatar: 'https://i.pravatar.cc/40?img=9', preview: 'Can you lower the price?', time: 'yesterday', unread: false }
-      ];
-      const dropdown = document.createElement('div');
-      dropdown.className = 'message-dropdown';
-      dropdown.innerHTML = `
-                <div class="dropdown-header"><h3>Messages</h3><button class="mark-read-btn" id="markAllMessagesRead">Mark all as read</button></div>
-                <div class="notifications-list" id="messagesList"></div>
-                <div class="dropdown-footer"><a href="messages.html">View all messages</a></div>
-            `;
-      document.body.appendChild(dropdown);
-      function renderMessages() {
-        const listContainer = document.getElementById('messagesList');
-        if (!listContainer) return;
-        const unreadCount = conversations.filter(c => c.unread).length;
-        messageBadge.textContent = unreadCount > 0 ? unreadCount : '';
-        messageBadge.style.display = unreadCount > 0 ? 'block' : 'none';
-        if (conversations.length === 0) { listContainer.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--text-secondary);">No messages</div>`; return; }
-        listContainer.innerHTML = conversations.map(conv => `
-                    <div class="message-item" data-id="${conv.id}">
-                        <div class="message-avatar"><img src="${conv.avatar}" alt="${conv.sender}" onerror="this.src='https://i.pravatar.cc/40?u=${conv.sender}'"></div>
-                        <div class="message-content">
-                            <div class="message-sender">${conv.sender}</div>
-                            <div class="message-preview">${conv.preview}</div>
-                            <div class="message-time">${conv.time}</div>
-                        </div>
-                        ${conv.unread ? '<span class="message-unread-dot"></span>' : ''}
-                    </div>
-                `).join('');
-        document.querySelectorAll('.message-item').forEach(item => {
-          item.addEventListener('click', function (e) {
-            e.stopPropagation();
-            const id = parseInt(this.dataset.id);
-            const conv = conversations.find(c => c.id === id);
-            if (conv && conv.unread) { conv.unread = false; renderMessages(); }
-            window.location.href = `chat.html?conversation=${id}`;
-          });
-        });
-      }
-      function markAllMessagesAsRead() { conversations.forEach(c => c.unread = false); renderMessages(); }
-      function toggleMessageDropdown(e) {
-        e.stopPropagation();
-        const rect = messageIcon.getBoundingClientRect();
-        dropdown.style.top = (rect.bottom + window.scrollY + 5) + 'px';
-        dropdown.style.right = (window.innerWidth - rect.right - window.scrollX) + 'px';
-        dropdown.classList.toggle('show');
-      }
-      function closeMessageDropdown(e) { if (!dropdown.contains(e.target) && e.target !== messageIcon && !messageIcon.contains(e.target)) dropdown.classList.remove('show'); }
-      messageIcon.addEventListener('click', toggleMessageDropdown);
-      document.addEventListener('click', closeMessageDropdown);
-      document.getElementById('markAllMessagesRead')?.addEventListener('click', markAllMessagesAsRead);
-      renderMessages();
-    })();
-
-    // ========== AI CHATBOT (نسخة محدثة) ==========
-    const chatIcon = document.getElementById('chatIcon');
-    const chatBox = document.getElementById('chatBox');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendChat');
-    if (chatIcon) {
-      chatIcon.addEventListener('click', () => { chatBox.classList.toggle('show'); });
-      function addMessage(text, isUser = false) {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'chat-message' + (isUser ? '' : ' bot');
-        msgDiv.textContent = text;
-        chatMessages.appendChild(msgDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-      sendBtn.addEventListener('click', () => {
-        const text = chatInput.value.trim();
-        if (text === '') return;
-        addMessage(text, true);
-        chatInput.value = '';
-        setTimeout(() => addMessage('Thanks! We\'ll reply soon. 😊'), 500);
-      });
-      chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendBtn.click(); }
-      });
-      document.addEventListener('click', (e) => {
-        if (!chatBox.contains(e.target) && !chatIcon.contains(e.target)) chatBox.classList.remove('show');
+        if (activeDropdown === 'notification') {
+          closeAllDropdowns();
+        } else {
+          openDropdown('notification');
+          const rect = bell.getBoundingClientRect();
+          const dropdown = document.querySelector('.notification-dropdown');
+          if (dropdown) {
+            dropdown.style.top = (rect.bottom + window.scrollY + 5) + 'px';
+            dropdown.style.right = (window.innerWidth - rect.right - window.scrollX) + 'px';
+          }
+        }
       });
     }
+
+    // Message Icon
+    const messageIcon = document.getElementById('messageIcon');
+    if (messageIcon) {
+      messageIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (activeDropdown === 'message') {
+          closeAllDropdowns();
+        } else {
+          openDropdown('message');
+          const rect = messageIcon.getBoundingClientRect();
+          const dropdown = document.querySelector('.message-dropdown');
+          if (dropdown) {
+            dropdown.style.top = (rect.bottom + window.scrollY + 5) + 'px';
+            dropdown.style.right = (window.innerWidth - rect.right - window.scrollX) + 'px';
+          }
+        }
+      });
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      const isClickInsideNotification = e.target.closest('.notification-wrapper') || e.target.closest('.notification-dropdown');
+      const isClickInsideMessage = e.target.closest('.message-wrapper') || e.target.closest('.message-dropdown');
+      if (!isClickInsideNotification && !isClickInsideMessage) {
+        closeAllDropdowns();
+      }
+    });
+
+    // Close dropdowns on scroll / resize (optional but good UX)
+    window.addEventListener('scroll', closeAllDropdowns);
+    window.addEventListener('resize', closeAllDropdowns);
+
+    // ========== NOTIFICATION DROPDOWN DATA ==========
+    const notificationDropdown = document.createElement('div');
+    notificationDropdown.className = 'notification-dropdown';
+    notificationDropdown.innerHTML = `
+      <div class="dropdown-header">
+        <h3>Notifications</h3>
+        <button class="mark-read-btn" id="markAllRead">Mark all as read</button>
+      </div>
+      <div class="notifications-list" id="notificationsList"></div>
+      <div class="dropdown-footer">
+        <a href="notifications.html" id="viewAllNotifications">View all</a>
+      </div>
+    `;
+    document.body.appendChild(notificationDropdown);
+
+    let notifications = [
+      { id: 1, type: 'message', title: 'New message', description: 'Ahmed sent you a message', time: '2 min ago' },
+      { id: 2, type: 'donation', title: 'Donation request', description: 'Someone wants your winter coat', time: '1 hour ago' }
+    ];
+    function getIconClass(type) { return type === 'message' ? 'fa-envelope' : 'fa-heart'; }
+    function renderNotifications() {
+      const listContainer = document.getElementById('notificationsList');
+      if (!listContainer) return;
+      listContainer.innerHTML = notifications.map(notif => `
+        <div class="notification-item">
+          <div class="notification-icon"><i class="fas ${getIconClass(notif.type)}"></i></div>
+          <div class="notification-content">
+            <div class="notification-title">${notif.title}</div>
+            <div class="notification-desc">${notif.description}</div>
+            <div class="notification-time">${notif.time}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderNotifications();
+    document.getElementById('markAllRead')?.addEventListener('click', () => {});
+
+    // ========== MESSAGE DROPDOWN DATA (with redirect to chat.html?user=...) ==========
+    const messageDropdown = document.createElement('div');
+    messageDropdown.className = 'message-dropdown';
+    messageDropdown.innerHTML = `
+      <div class="dropdown-header">
+        <h3>Messages</h3>
+        <button class="mark-read-btn" id="markAllMessagesRead">Mark all as read</button>
+      </div>
+      <div class="messages-list" id="messagesList"></div>
+      <div class="dropdown-footer">
+        <a href="messages.html" id="viewAllMessages">View all</a>
+      </div>
+    `;
+    document.body.appendChild(messageDropdown);
+
+    let conversations = [
+      { id: 1, sender: 'Ahmed Hassan', avatar: 'https://i.pravatar.cc/40?img=7', preview: 'Hey, is the MacBook still available?', time: '2 min ago' },
+      { id: 2, sender: 'Lamiaa Elsheikh', avatar: 'https://i.pravatar.cc/40?img=5', preview: 'Thanks for the donation!', time: '1 hour ago' }
+    ];
+    function renderMessages() {
+      const listContainer = document.getElementById('messagesList');
+      if (!listContainer) return;
+      listContainer.innerHTML = conversations.map(conv => {
+        const username = conv.sender.replace(/\s/g, '');
+        return `
+          <div class="message-item" data-username="${username}">
+            <div class="message-avatar"><img src="${conv.avatar}" alt="${conv.sender}" onerror="this.src='https://i.pravatar.cc/40?u=${conv.sender}'"></div>
+            <div class="message-content">
+              <div class="message-sender">${conv.sender}</div>
+              <div class="message-preview">${conv.preview}</div>
+              <div class="message-time">${conv.time}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      // إضافة مستمعات الأحداث للانتقال إلى صفحة الشات
+      document.querySelectorAll('.message-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const username = item.dataset.username;
+          window.location.href = `chat.html?user=${username}`;
+        });
+      });
+    }
+    renderMessages();
+    document.getElementById('markAllMessagesRead')?.addEventListener('click', () => {});
+
+    // ========== CHATBOT ==========
+    (function() {
+      const chatIcon = document.getElementById('chatIcon');
+      const chatLabel = document.getElementById('chatLabel');
+      const chatBox = document.getElementById('chatBox');
+      const chatMessages = document.getElementById('chatMessages');
+      const chatInput = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('sendChat');
+      const closeChatBtn = document.getElementById('closeChatBtn');
+
+      function toggleChat() { chatBox.classList.toggle('show'); }
+      chatIcon.addEventListener('click', toggleChat);
+      if (chatLabel) chatLabel.addEventListener('click', toggleChat);
+      if (closeChatBtn) closeChatBtn.addEventListener('click', () => chatBox.classList.remove('show'));
+
+      function addMessage(text, isUser = false, productSuggestions = null) {
+        const div = document.createElement('div');
+        div.className = 'chat-message' + (isUser ? '' : ' bot');
+        if (productSuggestions && productSuggestions.length) {
+          div.innerHTML = `<div>${text}</div>`;
+          productSuggestions.forEach(prod => {
+            const suggestionDiv = document.createElement('div');
+            suggestionDiv.style.cssText = 'background:rgba(255,138,76,0.1); border-left:3px solid var(--accent-1); padding:0.5rem; margin:0.5rem 0; border-radius:12px; cursor:pointer;';
+            suggestionDiv.innerHTML = `<strong>${prod.title}</strong> - $${prod.price}<br><small>${prod.user}</small>`;
+            suggestionDiv.addEventListener('click', () => goToProductPage(prod.id));
+            div.appendChild(suggestionDiv);
+          });
+        } else {
+          div.textContent = text;
+        }
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function handleSendMessage() {
+        const msg = chatInput.value.trim();
+        if (!msg) return;
+        addMessage(msg, true);
+        chatInput.value = '';
+        const lowerMsg = msg.toLowerCase();
+        if (lowerMsg.includes('product') || lowerMsg.includes('recommend') || lowerMsg.includes('show me')) {
+          setTimeout(() => addMessage('Here are some products you might like:', false, sampleProducts.slice(0, 3)), 500);
+        } else {
+          setTimeout(() => addMessage('Thanks! Phoenix AI will assist you shortly. 🔥'), 500);
+        }
+      }
+
+      sendBtn.addEventListener('click', handleSendMessage);
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          handleSendMessage();
+        }
+      });
+      document.addEventListener('click', (e) => {
+        if (!chatBox.contains(e.target) && !chatIcon.contains(e.target) && (!chatLabel || !chatLabel.contains(e.target))) {
+          chatBox.classList.remove('show');
+        }
+      });
+    })();
+
+    // ========== روابط الـ Bottom Nav ==========
+    document.getElementById('bottomMessagesNav')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Messages feature coming soon.');
+    });
+    document.getElementById('bottomNotificationsNav')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Notifications will be available soon.');
+    });
   </script>
 </body>
-
 </html>
