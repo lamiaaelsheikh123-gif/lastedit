@@ -22,7 +22,8 @@
             --accent-1: #ff8a4c;
             --accent-2: #ff6b2b;
             --gradient: linear-gradient(135deg, #ff8a4c, #ff4d4d);
-            --border-glass: rgba(255, 255, 255, 0.35);
+            --border-glass: rgba(0, 0, 0, 0.2);
+            --border-glass-dark: rgba(255, 255, 255, 0.25);
             --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
             --glow: rgba(255, 110, 64, 0.4);
             --input-bg: rgba(255, 255, 255, 0.9);
@@ -43,7 +44,8 @@
             --accent-1: #ff9f6e;
             --accent-2: #ff7b3f;
             --gradient: linear-gradient(135deg, #ff9f6e, #ff5e5e);
-            --border-glass: rgba(255, 255, 255, 0.15);
+            --border-glass: rgba(255, 255, 255, 0.3);
+            --border-glass-dark: rgba(255, 255, 255, 0.3);
             --shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
             --glow: rgba(255, 140, 80, 0.6);
             --input-bg: rgba(37, 37, 51, 0.9);
@@ -271,7 +273,6 @@
             transform: translateY(-2px);
         }
 
-        /* Password requirements styling */
         .password-requirements {
             background: var(--input-bg);
             border-radius: 15px;
@@ -307,6 +308,35 @@
         }
         .req-met i {
             color: var(--success) !important;
+        }
+
+        /* Terms & Conditions Checkbox */
+        .terms-group {
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .terms-group input {
+            margin-top: 0.2rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: var(--accent-1);
+            cursor: pointer;
+        }
+        .terms-group label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .terms-group a {
+            color: var(--accent-1);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .terms-group a:hover {
+            text-decoration: underline;
         }
 
         .error-message {
@@ -366,7 +396,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Google button - exactly like sign in page */
         .or-divider {
             text-align: center;
             position: relative;
@@ -429,7 +458,6 @@
         }
         .login-link a:hover { text-decoration: underline; }
 
-        /* Success Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -597,7 +625,6 @@
                     <div class="input-group">
                         <label>Password</label>
                         <input type="password" id="password" name="password" class="input-field" placeholder="Create a strong password" required>
-                        <!-- Password requirements list -->
                         <div class="password-requirements">
                             <p>Your password must contain:</p>
                             <ul id="passwordReqsList">
@@ -613,6 +640,14 @@
                     <div class="input-group">
                         <label>Confirm Password</label>
                         <input type="password" id="confirmPassword" class="input-field" placeholder="Confirm your password" required>
+                    </div>
+
+                    <!-- Terms & Conditions Checkbox -->
+                    <div class="terms-group">
+                        <input type="checkbox" id="termsCheckbox">
+                        <label for="termsCheckbox">
+                            I agree to the <a href="#" id="termsLink">Terms and Conditions</a> and <a href="#" id="privacyLink">Privacy Policy</a>.
+                        </label>
                     </div>
 
                     <div id="errorMessage" class="error-message">
@@ -638,7 +673,6 @@
         </div>
     </div>
 
-    <!-- Success Modal -->
     <div class="modal-overlay" id="successModal">
         <div class="success-modal">
             <div class="checkmark-circle">
@@ -682,7 +716,7 @@
             });
         });
 
-        // Password strength real-time validation
+        // Password validation
         const passwordField = document.getElementById('password');
         const reqLength = document.getElementById('req-length');
         const reqUpper = document.getElementById('req-upper');
@@ -691,7 +725,6 @@
         const reqSpecial = document.getElementById('req-special');
 
         function validatePassword(pwd) {
-            let valid = true;
             const hasLength = pwd.length >= 8;
             const hasUpper = /[A-Z]/.test(pwd);
             const hasLower = /[a-z]/.test(pwd);
@@ -742,32 +775,27 @@
             }
         }
 
-        // API-ready handleSignUp
+        // LOCAL STORAGE SIGNUP (NO NETWORK ERROR)
         async function handleSignUp(userData) {
-            const API_URL = 'https://your-api.com/auth/register'; // Replace with real endpoint
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(userData)
-                });
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.message || data.error || 'Registration failed');
-                }
-                if (data.token) localStorage.setItem('authToken', data.token);
-                if (data.user) localStorage.setItem('currentUser', JSON.stringify(data.user));
-                return { success: true };
-            } catch (err) {
-                let errorMsg = err.message;
-                if (err.name === 'TypeError' && err.message.includes('fetch')) {
-                    errorMsg = 'Network error: Unable to connect to server. Please check your internet connection.';
-                }
-                return { success: false, error: errorMsg };
+            // Simulate network delay (loading effect)
+            await new Promise(resolve => setTimeout(resolve, 1200));
+            
+            // Get existing users or empty array
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Check if email already exists
+            const emailExists = users.some(user => user.email === userData.email);
+            if (emailExists) {
+                return { success: false, error: 'This email is already registered. Please sign in instead.' };
             }
+            
+            // Create new user with unique ID
+            const newUser = { ...userData, id: Date.now() };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            
+            return { success: true };
         }
 
         // Form submission
@@ -778,6 +806,7 @@
         const phoneInput = document.getElementById('phone');
         const ageInput = document.getElementById('age');
         const confirmInput = document.getElementById('confirmPassword');
+        const termsCheckbox = document.getElementById('termsCheckbox');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -792,6 +821,7 @@
             const password = passwordField.value;
             const confirm = confirmInput.value;
 
+            // Basic validations
             if (!firstName || !lastName || !email || !phone || !age || !password || !confirm) {
                 showError('All fields are required.');
                 return;
@@ -822,6 +852,10 @@
                 showError('Passwords do not match.');
                 return;
             }
+            if (!termsCheckbox.checked) {
+                showError('You must agree to the Terms and Conditions and Privacy Policy.');
+                return;
+            }
 
             const userData = {
                 first_name: firstName,
@@ -846,17 +880,24 @@
             document.getElementById('successModal').classList.add('active');
         });
 
-        // Modal redirect
         document.getElementById('goToDashboardBtn').addEventListener('click', () => {
             window.location.href = 'dashboard.html';
         });
 
-        // Google button demo
         document.getElementById('googleBtn').addEventListener('click', () => {
             alert('Google authentication will be integrated soon.\nUse email/password to sign up.');
         });
 
-        // Autofocus fallback
+        // Placeholder for Terms & Privacy links (just alerts for demo)
+        document.getElementById('termsLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Terms and Conditions: By using Phoenix, you agree to our community guidelines...');
+        });
+        document.getElementById('privacyLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Privacy Policy: We value your privacy. Your data is safe with us.');
+        });
+
         window.addEventListener('load', () => {
             firstNameInput.focus();
         });
