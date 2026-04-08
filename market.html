@@ -284,6 +284,8 @@
       border-radius: 60px;
       padding: 0.3rem 0.3rem 0.3rem 1.5rem;
       align-items: center;
+      width: 100%;
+      box-sizing: border-box;
     }
     .search-bar input {
       flex: 1;
@@ -293,6 +295,7 @@
       font-size: 1rem;
       color: var(--text-primary);
       outline: none;
+      min-width: 0;
     }
     .search-bar button {
       background: var(--gradient);
@@ -303,6 +306,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: 0.2s;
+      white-space: nowrap;
     }
 
     /* شريط الفلاتر - قابل للتمرير أفقياً على الموبايل */
@@ -812,6 +816,24 @@
       .chatbot {
         bottom: 80px;
       }
+
+      /* ===== تحسينات قسم البحث للشاشات الصغيرة فقط ===== */
+      .search-bar {
+        padding: 0.3rem 0.3rem 0.3rem 1rem;  /* تقليل المسافة اليسرى قليلاً */
+        gap: 0.5rem;                         /* مسافة بين العناصر */
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .search-bar input {
+        padding: 0.7rem 0;                  /* تقليل الحشو الرأسي */
+        font-size: 0.95rem;
+        min-width: 0;                       /* يسمح للـ flex بالانكماش */
+      }
+      .search-bar button {
+        padding: 0.7rem 1.2rem;             /* زر أصغر ليناسب الشاشة */
+        font-size: 0.9rem;
+        white-space: nowrap;                /* منع انكسار النص */
+      }
     }
 
     @media (min-width: 769px) {
@@ -979,9 +1001,9 @@
       { id: 9, title: 'Vintage Camera', category: 'electronics', condition: 'good', price: 210, type: 'sale', user: 'Alex', city: 'Cairo', img: 'Old Camera.png' },
       { id: 10, title: 'Yoga Mat', category: 'sports', condition: 'like-new', price: 25, type: 'sale', user: 'Sam', city: 'Giza', img: 'Yoga.png' },
       { id: 11, title: 'Children Book Set', category: 'books', condition: 'good', price: 0, type: 'free', user: 'Free', city: 'Cairo', img: 'Books.png' },
-      { id: 12, title: 'Wooden Table', category: 'furniture', condition: 'good', price: 450, type: 'sale', user: 'Furniture Co.', city: 'Alexandria', img: 'Wooden.png' },
-      { id: 13, title: 'Summer Dress', category: 'clothes', condition: 'new', price: 35, type: 'sale', user: 'Fashion Hub', city: 'Cairo', img: 'Summer-Dress.png' },
-      { id: 14, title: 'Arabic Novel', category: 'books', condition: 'like-new', price: 0, type: 'free', user: 'Free', city: 'Giza', img: 'Arabic-novel.png' }
+      { id: 12, title: 'Wooden Table', category: 'furniture', condition: 'good', price: 450, type: 'sale', user: 'Furniture Co.', city: 'Alexandria', img: null },
+      { id: 13, title: 'Summer Dress', category: 'clothes', condition: 'new', price: 35, type: 'sale', user: 'Fashion Hub', city: 'Cairo', img: null },
+      { id: 14, title: 'Arabic Novel', category: 'books', condition: 'like-new', price: 0, type: 'free', user: 'Free', city: 'Giza', img: 'Book.png' }
     ];
 
     // ========== متغيرات حالة المستخدم ==========
